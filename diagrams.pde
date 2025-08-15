@@ -4,7 +4,6 @@ Icon testIcon;
 
 void setupDiagrams() {
   fill_diagram = loadImage(fill_img);
-  // fill_diagram.resize(500, 500);
   setupGPSMap();
   setup3D();
   he_label = cp5.addLabel("He\nT : ####\nP : ####")
@@ -23,9 +22,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global")
     ;
 
@@ -44,9 +43,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
   line_label = cp5.addLabel("Line Purge\nT : ####\nP : ####")
@@ -64,9 +63,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
   tt_label = cp5.addLabel("Tank Top\nT : ####\nP : ####")
@@ -84,9 +83,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
   tb_label = cp5.addLabel("Tank Bottom\nT : ####\nP : ####")
@@ -104,9 +103,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
   chamber_toggle = cp5.addToggle("Chamber Toggle")
@@ -116,9 +115,9 @@ void setupDiagrams() {
     .setMode(ControlP5.SWITCH)
     .setLabel("")
     .setFont(font)
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
 
@@ -201,13 +200,13 @@ void updateDiagrams() {
   for (Toggle toggle : valve_toggles) {
     boolean v_state = toggle.getState();
     if (v_state == true) {
-      toggle.setColorForeground(color(0, 255, 0))
-        .setColorBackground(color(0, 100, 0))
-        .setColorActive(color(0, 255, 0));     // Green when on
+      toggle.setColorForeground(color(0, 100, 0))
+        .setColorBackground(color(0, 255, 0))
+        .setColorActive(color(0, 100, 0));     // Green when on
     } else if (v_state == false) {
-      toggle.setColorForeground(color(255, 0, 0))// Red when off
-        .setColorActive(color(255, 0, 0))    // Red when off
-        .setColorBackground(color(100, 0, 0));
+      toggle.setColorForeground(color(100, 0, 0))// Red when off
+        .setColorActive(color(100, 0, 0))    // Red when off
+        .setColorBackground(color(255, 0, 0));
     }
     toggle.setBroadcast(true);
   }

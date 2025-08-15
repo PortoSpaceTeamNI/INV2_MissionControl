@@ -1,3 +1,29 @@
+// controllers
+Textfield[] textfields = new Textfield[4];
+Textlabel log_display_rocket, log_display_filling, log_display_ignition;
+Textlabel ack_display;
+Textlabel log_stats;
+Textlabel history;
+ArrayDeque<String> history_deque;
+Chart fillingChart, launchChart;
+Textlabel pressureLabel, temperatureLabel, weightLabel;
+Textlabel altitudeLabel, velocityLabel, accelerationLabel;
+Textlabel ematch_label, chamber_temps_label, chamber_label;
+Textlabel he_label, n2o_label, line_label, tt_label, tb_label;
+Toggle he_toggle, n2o_toggle, line_toggle, tt_toggle, tb_toggle, chamber_toggle;
+Toggle status_toggle;
+Textlabel gps_label, bar_label, imu_label, kalman_label;
+
+// GUI Positions and Sizes
+float button_x1 = .8; // * displayWidth
+float button_x2 = .89;
+float button_height = .04; // * displayHeight
+float button_height_big = .07;
+float button_width = .13; // * displayWidth
+float toggle_height = .04;
+float toggle_width = .04;
+
+
 void setupControllers() {
   manual_setup();
   filling_setup();
@@ -16,45 +42,46 @@ void setupControllers() {
 
 
   // Textfields for parameters and limits
-  textfields[0] = cp5.addTextfield("Target Pressure")
+  textfields[0] = cp5.addTextfield("Parameter 1")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.23, displayHeight*.05)
-    .setSize((int)(displayWidth*.13), (int)(displayHeight*.05))
+    .setSize((int)(displayWidth*.09), (int)(displayHeight*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[1] = cp5.addTextfield("Trigger Pressure")
+  textfields[1] = cp5.addTextfield("Parameter 2")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(displayWidth*.37, displayHeight*.05)
-    .setSize((int)(displayWidth*.14), (int)(displayHeight*.05))
+    .setPosition(displayWidth*.33, displayHeight*.05)
+    .setSize((int)(displayWidth*.09), (int)(displayHeight*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[2] = cp5.addTextfield("Target Liquid")
+  textfields[2] = cp5.addTextfield("Parameter 3")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(displayWidth*.52, displayHeight*.05)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.05))
+    .setPosition(displayWidth*.43, displayHeight*.05)
+    .setSize((int)(displayWidth*.09), (int)(displayHeight*.05))
+    .setFont(font)
+    .setInputFilter(ControlP5.FLOAT)
+    .moveTo("filling");
+    
+  textfields[3] = cp5.addTextfield("Parameter 4")
+    .setAutoClear(false)
+    .setColor(defaultColor)
+    .setPosition(displayWidth*.53, displayHeight*.05)
+    .setSize((int)(displayWidth*.09), (int)(displayHeight*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
   // Send button
-  cp5.addButton("Send")
+  cp5.addButton("Execute")
     .setPosition(displayWidth*.63, displayHeight*.05)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*button_height))
-    .moveTo("filling")
-    .setColor(defaultColor)
-    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-    .setFont(font);
-
-  cp5.addButton("Start Filling")
-    .setPosition(displayWidth*button_x1, displayHeight*.3)
-    .setSize((int)(displayWidth*button_width), (int)(displayHeight*button_height))
+    .setSize((int)(displayWidth*.1), (int)(displayHeight*.05))
     .moveTo("filling")
     .setColor(defaultColor)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
@@ -166,17 +193,6 @@ void setupControllers() {
     .moveTo("global")
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
-  cp5.addScrollableList("Select ID")
-    .setPosition(displayWidth*.02, displayHeight*.73)
-    .setSize((int)(displayWidth*.17), (int)(displayHeight*.5))
-    .setBarHeight((int)(displayHeight*.05))
-    .setItemHeight((int)(displayHeight*.05))
-    .addItems(IDs)
-    .setFont(font)
-    .setColor(defaultColor)
-    .moveTo("global")
-    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
   log_display_rocket = cp5.addTextlabel("Rocket Log")
     .setText("Rocket state")
     .setColor(labelColor)
@@ -227,18 +243,22 @@ void setupControllers() {
     .setLabel("Toggle Status")
     .setFont(font)
     .moveTo("global")
-    .setColorForeground(color(255, 0, 0))  // Red when off
-    .setColorBackground(color(100, 0, 0))
-    .setColorActive(color(255, 0, 0));
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0));
 
   // manual
-  cp5.addButton("Start Manual")
+  cp5.addToggle("Manual Toggle")
     .setPosition(width*button_x1, height*.3)
-    .setSize((int)(width*.17), (int)(height*.05))
+    .setSize((int)(width*.05), (int)(width*.02))
+    .setValue(false)
+    .setMode(ControlP5.SWITCH)
+    .setLabel("Toggle Manual")
+    .setFont(font)
     .moveTo("default")
-    .setColor(defaultColor)
-    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-    .setFont(font);
+    .setColorForeground(color(100, 0, 0))  // Red when off
+    .setColorBackground(color(255, 0, 0))
+    .setColorActive(color(100, 0, 0));
 
   /*
   cp5.addScrollableList("Select Command")
@@ -254,9 +274,6 @@ void setupControllers() {
    */
 
   for (ManCommand command : ManCommand.values()) {
-    if (command.ordinal() >= ManCommand.manual_cmd_size.ordinal()) {
-      break;
-    }
     cp5.addButton(command.name())
       .setPosition(displayWidth*.02, displayHeight*(.05 + command.ordinal() * .035))
       .setSize((int)(width*.2), (int)(height*.03))

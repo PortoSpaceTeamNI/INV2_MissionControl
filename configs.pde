@@ -6,20 +6,12 @@ int doubt_timeout = 10000;
 
 int chart_interval = 200; // ms
 
-// GUI Positions and Sizes
-float button_x1 = .8; // * displayWidth
-float button_x2 = .89;
-float button_height = .04; // * displayHeight
-float button_height_big = .07;
-float button_width = .13; // * displayWidth
-float toggle_height = .04;
-float toggle_width = .04;
-
 int baudRate = 115200;
 
-byte MyID = (byte) 0x00;
+final byte MyID = (byte) 0x00;
+final byte PACKET_VERSION = (byte)0x01;
 
-List<String> programs = Arrays.asList("Safety Pressure", "Purge Pressure", "Purge Liquid", "Fill He", "Fill N2O", "Purge Line");
+List<String> programs = Arrays.asList("None", "Fill COPV", "Pre pressurize", "Fill N2O", "Post Pressurize");
 byte[] prog_cmds = {(byte)0x00, (byte)0x01, (byte)0x02, (byte)0x03, (byte)0x04, (byte)0x05};
 
 List<String> vars = Arrays.asList("Target Pressure", "Trigger Pressure", "Target Liquid");

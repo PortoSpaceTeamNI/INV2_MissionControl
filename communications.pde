@@ -1,16 +1,11 @@
 import java.util.BitSet;
 
 enum ParseState {
-  START,
-  VERSION,
-    CMD,
+    VERSION,
     SENDER_ID,
     TARGET_ID,
-    PAYLOAD_LENGTH,
-    H_CRC,
+    COMMAND_ID,
     PAYLOAD,
-    CRC1,
-    CRC2,
 };
 
 void serialThread() {
@@ -32,7 +27,7 @@ void serialThread() {
         if (last_cmd_sent != (byte)0xff) {
           ack_packet_loss++;
         }
-        last_cmd_sent = head.command;
+        last_cmd_sent = head.command_id;
         if (history_deque.size() == history_capacity) {
           history_deque.removeFirst();
         }
@@ -51,83 +46,45 @@ void serialThread() {
 void parseIncomingByte(byte rx_byte) {
   print((char)rx_byte);
   if (last_read_time == 0 || millis() - last_read_time > packet_read_timeout) {
-    currentParseState = ParseState.START;
+    currentParseState = ParseState.VERSION;
   }
   last_read_time = millis();
   switch(currentParseState) {
-  case START:
-    if (rx_byte == (byte) 0x55) {
-      currentParseState = ParseState.CMD;
-    } else {
-      // println("Start byte not received");
-    }
-    break;
-  case CMD:
-    CMD = rx_byte;
-    currentParseState = ParseState.SENDER_ID;
-    //println("Command Received: " + (int) CMD);
-    break;
-  case SENDER_ID:
-    SENDER_ID = rx_byte;
-    currentParseState = ParseState.TARGET_ID;
-    break;
-  case TARGET_ID:
-    TARGET_ID = rx_byte;
-    currentParseState = ParseState.PAYLOAD_LENGTH;
-  case PAYLOAD_LENGTH:
-    PLEN = rx_byte;
-    //println("Payload length " + (int) PLEN);
-    currentParseState = ParseState.H_CRC;
-    break;
-  case H_CRC:
-    currentParseState = ParseState.H_CRC;
-    if ((int) PLEN > 0) {
+    case VERSION:
+      rx_packet.version = rx_byte;
+      currentParseState = ParseState.VERSION;
+      break;
+    case SENDER_ID:
+      rx_packet.sender_id = rx_byte;
+      currentParseState = ParseState.TARGET_ID;
+      break;
+    case TARGET_ID:
+      rx_packet.target_id = rx_byte;
+      currentParseState = ParseState.COMMAND_ID;
+      break;
+    case COMMAND_ID:
+      rx_packet.command_id = rx_byte;
       currentParseState = ParseState.PAYLOAD;
-      rx_payload = new byte[PLEN];
       rx_payload_index = 0;
-    } else {
-      rx_payload = empty_payload;
-      rx_payload_index = 0;
-      currentParseState = ParseState.CRC1;
-    }
-  case PAYLOAD:
-    rx_payload[rx_payload_index] = rx_byte;
-    rx_payload_index++;
-    if (rx_payload_index >= PLEN) {
-      currentParseState = ParseState.CRC1;
-    }
-    break;
-  case CRC1:
-    currentParseState = ParseState.CRC2;
-    break;
-  case CRC2:
-    processPacket();
-    currentParseState = ParseState.START;
+      break;
+    case PAYLOAD:
+      rx_payload[rx_payload_index] = rx_byte;
+      rx_payload_index++;
+      if (rx_payload_index >= 124) {
+        currentParseState = ParseState.VERSION;
+      }
+      break;
   }
 }
 
 void processPacket() {
-  dataPacket new_packet = new dataPacket(CMD, SENDER_ID, TARGET_ID, rx_payload);
-  rx_packet = new_packet;
   //println();
   //println(rx_packet.getPacket());
   rx_packet.logPacket(LogEvent.MSG_RECEIVED);
-  if (rx_packet.command == (byte) 0x00) {
-    if (rx_packet.sender_id == (byte) 0x02) {
-      updateData(rx_packet);
-      updateLogStats(1);
-    } else if (rx_packet.sender_id == (byte) 0x01) {
-      updateData(rx_packet);
-      updateLogStats(2);
-    }
-  } else if (rx_packet.command == (byte) 0x01) {
+  if (rx_packet.command_id == Command.STATUS_REP.ordinal()) {
     updateData(rx_packet);
-    //updateLogStats(1);
-  } else if (rx_packet.command == (byte) 0x0e) { // STATUS ACK
-    displayAck((int)0x0e);
-    updateData(rx_packet);
-  } else if (CMD >= (byte)0x0f && CMD <= (byte)0x1a) {
-    displayAck((int)CMD);
+  } else if (rx_packet.command_id == Command.ACK.ordinal()) { // STATUS ACK
+    displayAck(rx_packet);
   }
 }
 
@@ -163,7 +120,7 @@ void updateData(dataPacket packet) {
       AskData ask = AskData.values()[i];
       switch (ask) {
       case rocket_flags_state:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -177,7 +134,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case tank_pressures:
-        if (packet.payloadLength < index + 6) {
+        if (packet.payload.length < index + 6) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -187,7 +144,7 @@ void updateData(dataPacket packet) {
         index += 6;
         break;
       case tank_temps:
-        if (packet.payloadLength < index + 4) {
+        if (packet.payload.length < index + 4) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -196,7 +153,7 @@ void updateData(dataPacket packet) {
         index += 4;
         break;
       case gps_data:
-        if (packet.payloadLength < index + 13) {
+        if (packet.payload.length < index + 13) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -208,7 +165,7 @@ void updateData(dataPacket packet) {
         index += 13;
         break;
       case barometer_altitude:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -216,7 +173,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case imu_data:
-        if (packet.payloadLength < index + 12) {
+        if (packet.payload.length < index + 12) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -229,7 +186,7 @@ void updateData(dataPacket packet) {
         index += 12;
         break;
       case kalman_data:
-        if (packet.payloadLength < index + 16) {
+        if (packet.payload.length < index + 16) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -244,7 +201,7 @@ void updateData(dataPacket packet) {
         index += 16;
         break;
       case parachutes_ematches:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -253,7 +210,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case fill_station_state:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -267,7 +224,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case fill_pressures:
-        if (packet.payloadLength < index + 8) {
+        if (packet.payload.length < index + 8) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -278,7 +235,7 @@ void updateData(dataPacket packet) {
         index += 8;
         break;
       case fill_temps:
-        if (packet.payloadLength < index + 6) {
+        if (packet.payload.length < index + 6) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -288,7 +245,7 @@ void updateData(dataPacket packet) {
         index += 6;
         break;
       case nitro_loadcell:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -296,7 +253,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case ignition_station_state:
-        if (packet.payloadLength < index + 1) {
+        if (packet.payload.length < index + 1) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -305,7 +262,7 @@ void updateData(dataPacket packet) {
         index += 1;
         break;
       case chamber_trigger_temp:
-        if (packet.payloadLength < index + 2) {
+        if (packet.payload.length < index + 2) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -313,7 +270,7 @@ void updateData(dataPacket packet) {
         index += 2;
         break;
       case main_ematch:
-        if (packet.payloadLength < index + 1) {
+        if (packet.payload.length < index + 1) {
           print("Index out of bounds: " + ask);
           return;
         }
@@ -328,33 +285,20 @@ void updateData(dataPacket packet) {
   }
 }
 
-void displayAck(int ackValue) {
-  if ((byte) ackValue != (last_cmd_sent + (byte) cmd_size)) {
+void displayAck(dataPacket rx_packet) {
+  byte ack_cmd_id = rx_packet.payload[0];
+  Command ack_cmd = Command.values()[ack_cmd_id];
+  String ack_name = ack_cmd.name();
+  if (ack_cmd_id != last_cmd_sent) {
     ack_packet_loss++;
     updateLogStats();
   }
-  last_cmd_sent = (byte) 0xff;
-  String ackName;
-  if (ackValue == Command.MANUAL_EXEC_ACK.ordinal()) { // Manual Exec Ack
-    ackName = "Manual Exec";
-    if (rx_packet.payload[0] == (byte) 0x0d) { // flash ids cmd (2) + man command size (10) + 1
-      int file_count = (int) rx_packet.payloadLength - 1;
-      //println(file_count);
-      //println(rx_packet.getPacket());
-      String id = str((ByteBuffer.wrap(Arrays.copyOfRange(rx_packet.payload, file_count - 1, file_count + 1))).getShort());
-      ackName = "Flash Log ID: " + id;
-    }
-  } else if (ackValue == Command.FIRE_PYRO_ACK.ordinal()) { // Fire Pyro Ack
-    ackName = "Fire Pyro";
-    status_toggle.setState(true);
-    cp5.getController("Select ID").setValue(0);
-  }
-  ackName = ack_map.get(ackValue);
-  ack_display.setText("Last Ack Received: \n" + ackName);
+  last_cmd_sent = (byte) Command.NONE.ordinal();
+  ack_display.setText("Last Ack Received: \n" + ack_name);
   if (history_deque.size() == history_capacity) {
     history_deque.removeFirst();
   }
-  history_deque.addLast("Ack <- " + ackName);
+  history_deque.addLast("Ack <- " + ack_name);
   String history_string = "";
   for (String element : history_deque) {
     history_string += element + "\n";
