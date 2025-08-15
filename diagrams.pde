@@ -4,6 +4,7 @@ Icon testIcon;
 
 void setupDiagrams() {
   fill_diagram = loadImage(fill_img);
+  // fill_diagram.resize(500, 500);
   setupGPSMap();
   setup3D();
   he_label = cp5.addLabel("He\nT : ####\nP : ####")
