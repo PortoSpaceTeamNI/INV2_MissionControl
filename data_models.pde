@@ -1,169 +1,95 @@
+ class OBC {
+   RocketState state = RocketState.IDLE;
+   RocketSubState substate = RocketSubState.NONE;
+   boolean sd_logging;
+ };
+ 
+ class HYDRA_UF {
+   boolean vent_valve, pressurizing_valve;
+   short probe_thermo1, probe_thermo2;
+ };
+ 
+ class HYDRA_LF {
+   boolean main_valve, abort_valve;
+   short probe_thermo1, probe_thermo2, probe_thermo3, chamber_temperature;
+   short tank_pressure, chamber_pressure;
+ };
+ 
+ class HYDRA_FS {
+   class N2 {
+     boolean fill_valve, purge_valve;
+     short pressure;
+   };
+   
+   class N2O {
+     boolean fill_valve, purge_valve;
+     short temperature, pressure;
+   };
+   
+   class QUICK_DC {
+     boolean n2_valve, n2o_valve;
+     short pressure;
+   };
+   
+   N2 n2 = new N2();
+   N2O n2o = new N2O();
+   QUICK_DC quick_dc = new QUICK_DC();
+ };
+ 
+ class NAVIGATOR {
+   class GPS {
+     float latitude, longitude;
+     byte sat_count;
+     short altitude, horizontal_velocity;
+   };
+   
+   class Kalman {
+     short velocity_z, acceleration_z, altitude, max_altitude;
+     short q1, q2, q3, q4; // quaternions
+   };
+   
+   class IMU {
+     short accel_x, accel_y, accel_z;
+     short gyro_x, gyro_y, gyro_z;
+     short mag_x, mag_y, mag_z;
+   }
+   
+   short barometer_alt1, barometer_alt2;
+   
+   GPS gps = new GPS();
+   Kalman kalman = new Kalman();
+   IMU imu = new IMU();
+ };
+ 
+ class ELYTRA {
+   boolean main_chute_ematch, drogue_chute_ematch;
+ };
+ 
+ class LIFT_R {
+   short loadcell1, loadcell2, loadcell3;
+   boolean main_ematch;
+ };
+ 
+ class LIFT_FS {
+   short n2o_loadcell;
+ };
 
-
-class RocketData {
-  RocketState state = 0;
-  boolean flash_running;
-  class Valves {
-    boolean vent,
-      abort,
-      main;
-  }
-  class Tank {
-    short pressure,
-      temp_probe1,
-      temp_probe2,
-      temp_probe3,
-      temp_probe4,
-      temp_probe5;
-  }
-  class Chamber {
-    short pressure,
-          temperature;
-  class GPS {
-    byte satellite_count;
-    short altitude;
-    float latitude,
-      longitude;
-    short horizontal_velocity;
-  }
-  short barometer_altitude;
-  class IMU {
-    short accel_x,
-      accel_y,
-      accel_z,
-      gyro_x,
-      gyro_y,
-      gyro_z,
-      mag_x,
-      mag_y,
-      mag_z;
-  }
-  class Kalman {
-    short altitude,
-      max_altitude,
-      vel_z,
-      acel_z;
-    int q1,
-      q2,
-      q3,
-      q4;
-  }
-  class Parachute {
-    short main_ematch,
-      drogue_ematch;
-  }
-
-  // initializations
-  Valves valves = new Valves();
-  Tank tank = new Tank();
-  GPS gps = new GPS();
-  IMU imu = new IMU();
-  Kalman kalman = new Kalman();
-  Parachute parachute = new Parachute();
-
-  String getState() {
-    return StateRocket.values()[state].toString();
-  }
-  AskData[] man_ask = {
-    AskData.rocket_flags_state,
-    AskData.tank_pressures,
-    AskData.tank_temps,
-    AskData.gps_data,
-    AskData.barometer_altitude,
-    AskData.imu_data,
-    AskData.kalman_data,
-    AskData.parachutes_ematches
-  };
-  AskData[] fill_ask = {
-    AskData.rocket_flags_state,
-    AskData.tank_pressures,
-    AskData.tank_temps,
-  };
-  AskData[] launch_ask = {
-    AskData.rocket_flags_state,
-    AskData.tank_pressures,
-    AskData.gps_data,
-    AskData.kalman_data,
-    AskData.parachutes_ematches,
-  };
-}
-
-class FillingData {
-  byte state = 0;
-  boolean flash_running;
-  class He {
-    short pressure,
-      temperature;
-    boolean valve;
-  }
-  class N2O {
-    short pressure,
-      temperature,
-      loadcell;
-    boolean valve;
-  }
-  class Line {
-    short pressure,
-      temperature;
-    boolean valve;
-  }
-  short rs_press;
-  String getState() {
-    return StateFilling.values()[state].toString();
-  }
-
-  AskData[] man_ask = {
-    AskData.fill_station_state,
-    AskData.fill_pressures,
-    AskData.fill_temps,
-    AskData.nitro_loadcell,
-  };
-
-  AskData[] fill_ask = {
-    AskData.fill_station_state,
-    AskData.fill_pressures,
-    AskData.fill_temps,
-    AskData.nitro_loadcell,
-  };
-
-  AskData[] launch_ask = new AskData[0];
-
-  // initializations
-  He he = new He();
-  N2O n2o = new N2O();
-  Line line = new Line();
-}
-
-class IgnitionData {
-  byte state = 0;
-  short chamber_trigger_temp;
-  short main_ematch;
-
-  String getState() {
-    return StateIgnition.values()[state].toString();
-  }
-
-  AskData[] man_ask = {
-    AskData.ignition_station_state,
-    AskData.chamber_trigger_temp,
-    AskData.main_ematch,
-  };
-
-  AskData[] fill_ask = new AskData[0];
-
-  AskData[] launch_ask = {
-    AskData.ignition_station_state,
-    AskData.chamber_trigger_temp,
-    AskData.main_ematch,
-  };
-}
-
-RocketData rocket_data;
-FillingData filling_data;
-IgnitionData ignition_data;
+OBC obc;
+HYDRA_UF hydra_uf;
+HYDRA_LF hydra_lf;
+HYDRA_FS hydra_fs;
+NAVIGATOR nav;
+ELYTRA elytra;
+LIFT_R lift_r;
+LIFT_FS lift_fs;
 
 void init_data_objects() {
-  rocket_data = new RocketData();
-  filling_data = new FillingData();
-  ignition_data = new IgnitionData();
+  obc = new OBC();
+  hydra_uf = new HYDRA_UF();
+  hydra_lf = new HYDRA_LF();
+  hydra_fs = new HYDRA_FS();
+  nav = new NAVIGATOR();
+  elytra = new ELYTRA();
+  lift_r = new LIFT_R();
+  lift_fs = new LIFT_FS();
 }

@@ -7,11 +7,12 @@ enum RocketState {
   ABORT, //-> fuelling and flight aborted 
 };
 
-enum FillingState {
- // TODO: add filling sub states
-};
-
-enum FlightState {
+enum RocketSubState {
+    NONE,
+    FILLING_COPV,
+    PRE_PRESSURIZING,
+    FILLING_N2O,
+    POST_PRESSURIZING,
     LAUNCH, // -> e-maches triggered
     ASCEND, // -> in flight
     APOGEE, // -> apogee detected

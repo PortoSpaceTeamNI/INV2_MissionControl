@@ -139,7 +139,7 @@ void updateDiagrams() {
   }
 
   // he valve
-  if (filling_data.he.valve) {
+  if (hydra_fs.n2.fill_valve) {
     fill(0, 255, 0);
     n2_toggle.setState(true);
   } else {
@@ -149,7 +149,7 @@ void updateDiagrams() {
   //circle(width*.56, height*.633, height*.018);
 
   // n2o valve
-  if (filling_data.n2o.valve) {
+  if (hydra_fs.n2o.fill_valve) {
     fill(0, 255, 0);
     n2o_toggle.setState(true);
   } else {
@@ -159,7 +159,7 @@ void updateDiagrams() {
   //circle(width*.56, height*.73, height*.018);
 
   // line valve
-  if (filling_data.line.valve) {
+  if (hydra_fs.n2o.purge_valve) {
     fill(0, 255, 0);
     line_toggle.setState(true);
   } else {
@@ -169,7 +169,7 @@ void updateDiagrams() {
   //circle(width*.423, height*.698, height*.018);
 
   // tt valve
-  if (rocket_data.valves.purge_top) {
+  if (hydra_uf.vent_valve) {
     fill(0, 255, 0);
     tt_toggle.setState(true);
   } else {
@@ -179,7 +179,7 @@ void updateDiagrams() {
   //circle(width*.304, height*.46, height*.018);
 
   // tb valve
-  if (rocket_data.valves.purge_bot) {
+  if (hydra_lf.abort_valve) {
     fill(0, 255, 0);
     tb_toggle.setState(true);
   } else {
@@ -188,7 +188,7 @@ void updateDiagrams() {
   }
   //circle(width*.304, height*.935, height*.018);
 
-  if (rocket_data.valves.chamber) {
+  if (hydra_lf.main_valve) {
     fill(0, 255, 0);
     chamber_toggle.setState(true);
   } else {

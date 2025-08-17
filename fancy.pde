@@ -34,10 +34,10 @@ void update3D() {
   rocket3D.translate(rocket3D.width / 2, rocket3D.height / 2, 0);
   rocket3D.noStroke();
 
-  float q1 = (float)rocket_data.kalman.q1 / (int)0xffff;
-  float q2 = (float)rocket_data.kalman.q2 / (int)0xffff;
-  float q3 = (float)rocket_data.kalman.q3 / (int)0xffff;
-  float q4 = (float)rocket_data.kalman.q4 / (int)0xffff;
+  float q1 = (float)nav.kalman.q1 / (int)0xffff;
+  float q2 = (float)nav.kalman.q2 / (int)0xffff;
+  float q3 = (float)nav.kalman.q3 / (int)0xffff;
+  float q4 = (float)nav.kalman.q4 / (int)0xffff;
   //println(q1,q2, q3, q4);
   float q[] = {q1, q2, q3, q4};
   float g[] = quaternionToEuler(q);
@@ -70,8 +70,8 @@ void updateGPSMap() {
   if (cp5.getTab("launch").isActive()) {
     image(map_image, map_x1, map_y1, map_width, map_height);
     fill(255, 0, 0); // Red color for the position marker
-    float longitude = rocket_data.gps.longitude;
-    float latitude = rocket_data.gps.latitude;
+    float longitude = nav.gps.longitude;
+    float latitude = nav.gps.latitude;
 
     if (longitude < MIN_LONG) longitude = MIN_LONG;
     if (longitude > MAX_LONG) longitude = MAX_LONG;

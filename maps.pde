@@ -1,4 +1,4 @@
-HashMap<String, boolean[]> prog_args = new HashMap<String, boolean[]>();
+HashMap<String, boolean[]> prog_param_map = new HashMap<String, boolean[]>();
 
 enum StateRocket {
   IDLE,
@@ -77,18 +77,16 @@ enum ValveToggle {
 }
 
 void maps() {
-  boolean[] _bl1 = {true, true, false};
-  prog_args.put("Safety Pressure", _bl1);
-  boolean[] _bl2 = {true, true, false};
-  prog_args.put("Purge Pressure", _bl2);
-  boolean[] _bl3 = {false, false, true};
-  prog_args.put("Purge Liquid", _bl3);
-  boolean[] _bl4 = {true, false, false};
-  prog_args.put("Fill He", _bl4);
-  boolean[] _bl5 = {false, true, false};
-  prog_args.put("Fill N2O", _bl5);
-  boolean[] _bl6 = {true, false, false};
-  prog_args.put("Purge Line", _bl6);
+  boolean[] _bl1 = {false, false, false, false};
+  prog_param_map.put("None", _bl1);
+  boolean[] _bl2 = {true, false, false, false};
+  prog_param_map.put("Fill COPV", _bl2);
+  boolean[] _bl3 = {true, true, false, false};
+  prog_param_map.put("Pre Pressurize", _bl3);
+  boolean[] _bl4 = {true, true, true, true};
+  prog_param_map.put("Fill N2O", _bl4);
+  boolean[] _bl5 = {true, true, false, false};
+  prog_param_map.put("Post Pressurize", _bl5);
 }
 
 enum FillingProgram {

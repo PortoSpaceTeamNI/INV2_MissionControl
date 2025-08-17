@@ -42,7 +42,7 @@ void setupControllers() {
 
 
   // Textfields for parameters and limits
-  textfields[0] = cp5.addTextfield("Parameter 1")
+  textfields[0] = cp5.addTextfield("Target P")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.23, displayHeight*.05)
@@ -51,7 +51,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[1] = cp5.addTextfield("Parameter 2")
+  textfields[1] = cp5.addTextfield("Trigger P")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.33, displayHeight*.05)
@@ -60,7 +60,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[2] = cp5.addTextfield("Parameter 3")
+  textfields[2] = cp5.addTextfield("Target W")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.43, displayHeight*.05)
@@ -69,7 +69,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
     
-  textfields[3] = cp5.addTextfield("Parameter 4")
+  textfields[3] = cp5.addTextfield("Trigger T")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.53, displayHeight*.05)

@@ -11,10 +11,10 @@ int baudRate = 115200;
 final byte MyID = (byte) 0x00;
 final byte PACKET_VERSION = (byte)0x01;
 
-List<String> programs = Arrays.asList("None", "Fill COPV", "Pre pressurize", "Fill N2O", "Post Pressurize");
+List<String> programs = Arrays.asList("None", "Fill COPV", "Pre Pressurize", "Fill N2O", "Post Pressurize");
 byte[] prog_cmds = {(byte)0x00, (byte)0x01, (byte)0x02, (byte)0x03, (byte)0x04, (byte)0x05};
 
-List<String> vars = Arrays.asList("Target Pressure", "Trigger Pressure", "Target Liquid");
+List<String> prog_params = Arrays.asList("Target P", "Trigger P", "Target W", "Trigger T");
 List<String> IDs = Arrays.asList( "1 : Rocket", "2 : Filling Station", "3 : Ignition", "4 : Broadcast");
 
 String logFileName = "log.txt";

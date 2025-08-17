@@ -38,12 +38,12 @@ public void controlEvent(ControlEvent event) {
   } else if (event.isFrom("program")) {
     selected_index = (int) event.getValue();
     String program = programs.get(selected_index);
-    for (int i = 0; i < 5; i++) {
-      String arg = vars.get(i);
-      if (prog_args.get(program)[i]) {
-        cp5.getController(arg).setColor(defaultColor);
+    for (int i = 0; i < 4; i++) { // don't know why 4 works, should be 5 ???
+      String param = prog_params.get(i);
+      if (prog_param_map.get(program)[i]) {
+        cp5.getController(param).setColor(defaultColor);
       } else {
-        cp5.getController(arg).setColor(unactiveColor);
+        cp5.getController(param).setColor(unactiveColor);
       }
     }
     println(program);

@@ -67,9 +67,9 @@ void setupCharts() {
 
 void updateCharts() {
   // filling chart
-  float fp = float(rocket_data.tank.pressure_top) * .01,
-    ft = float(rocket_data.tank.temp_bot) * .1,
-    fw = float(filling_data.n2o.loadcell);
+  float fp = float(hydra_lf.tank_pressure) * .01,
+    ft = float(hydra_lf.probe_thermo3) * .1,
+    fw = float(lift_fs.n2o_loadcell);
 
   fillingChart.addData("Pressure", fp);
   fillingChart.addData("Temperature", ft);
@@ -86,9 +86,9 @@ void updateCharts() {
   weightLabel.setText("Weight: " + df.format(fw));
 
   // launch chart
-  float lalt = float(rocket_data.kalman.altitude) * .1,
-    lvel = float(rocket_data.kalman.vel_z) * .1,
-    lacel = float(rocket_data.kalman.acel_z) * .1;
+  float lalt = float(nav.kalman.altitude) * .1,
+    lvel = float(nav.kalman.velocity_z) * .1,
+    lacel = float(nav.kalman.acceleration_z) * .1;
 
   launchChart.addData("Altitude", lalt);
   launchChart.addData("Velocity", lvel);

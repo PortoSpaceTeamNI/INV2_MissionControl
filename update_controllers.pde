@@ -1,84 +1,64 @@
 void updateControllersData() {
-  if (millis() - last_f_ping > doubt_timeout) {
-    log_display_filling.setText("Filling: " + filling_data.getState() + "?");
-  } else {
-    log_display_filling.setText("Filling: " + filling_data.getState());
-  }
-  String he_data = "N2\n" +
-    "P: " + df.format(float(filling_data.he.pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(filling_data.he.temperature) * .1) + " ºC";
-  n2_label.setText(he_data);
+  String n2_data = "N2\n" +
+    "P: " + df.format(float(hydra_fs.n2.pressure) * .01) + " bar\n";
+  n2_label.setText(n2_data);
   String n2o_data = "N2O\n" +
-    "P: " + df.format(float(filling_data.n2o.pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(filling_data.n2o.temperature)* .1) + " ºC\n" +
-    "W: " + df.format(float(filling_data.n2o.loadcell) * .1) + " kg";
+    "P: " + df.format(float(hydra_fs.n2o.pressure) * .01) + " bar\n" +
+    "T: " + df.format(float(hydra_fs.n2o.temperature)* .1) + " ºC\n" +
+    "W: " + df.format(float(lift_fs.n2o_loadcell) * .1) + " kg";
   n2o_label.setText(n2o_data);
-  String line_data = "Line\n" +
-    "P: " + df.format(float(filling_data.line.pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(filling_data.line.temperature) * .1) + " ºC";
-  line_label.setText(line_data);
 
   if (millis() - last_r_ping > doubt_timeout) {
-    log_display_rocket.setText("Rocket: " + rocket_data.getState() + "?");
+    log_display_rocket.setText("State: " + obc.state.name() + "?");
   } else {
-    log_display_rocket.setText("Rocket: " + rocket_data.getState());
+    log_display_rocket.setText("State: " + obc.state.name());
   }
-  String debug = cp5.getTab("default").isActive() ? "DEBUG: ttp - " + df.format((float)filling_data.rs_press * .01) + " bar" : "";
-  String tt_data = "Tank Top\n" +
-    "P: " + df.format(float(rocket_data.tank.pressure_top) * .01) + " bar\n" +
-    "T: " + df.format(float(rocket_data.tank.temp_top) * .1) + " ºC" + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+debug;
-  tt_label.setText(tt_data);
-  String tb_data = "Tank Bottom\n" +
-    "P: " + df.format(float(rocket_data.tank.pressure_bot) * .01) + " bar\n" +
-    "T: " + df.format(float(rocket_data.tank.temp_bot) * .1) + " ºC";
-  tb_label.setText(tb_data);
 
-  if (millis() - last_i_ping > doubt_timeout) {
-    log_display_ignition.setText("Ignition: " + ignition_data.getState() + "?");
-  } else {
-    log_display_ignition.setText("Ignition: " + ignition_data.getState());
-  }
   String chamber_data = "Chamber\n" +
-    "P: " + df.format(float(rocket_data.chamber_pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(ignition_data.chamber_trigger_temp) * .1) + " ºC";
+    "P: " + df.format(float(hydra_lf.chamber_pressure) * .01) + " bar\n" +
+    "T: " + df.format(float(hydra_lf.chamber_temperature) * .1) + " ºC";
   chamber_label.setText(chamber_data);
 
   // other
-  ematch_label.setText("Launch e-Match: " + df.format(ignition_data.main_ematch)
-    + "\nDrogue e-Match: " + df.format(rocket_data.parachute.drogue_ematch)
-    + "\nMain e-Match: " + df.format(rocket_data.parachute.main_ematch));
+  ematch_label.setText("Main e-Match: " + (lift_r.main_ematch ? "ON" : "OFF")
+    + "\nDrogue Chute e-Match: " + (elytra.drogue_chute_ematch ? "ON" : "OFF")
+    + "\nMain Chute e-Match: " + (elytra.main_chute_ematch ? "ON" : "OFF"));
 
   String gps_data = "GPS          " +
-    "Sat: " + str(int(rocket_data.gps.satellite_count)) +
-    "\nLat: " + rocket_data.gps.latitude + "    " +
-    "Alt: " + df.format(float(rocket_data.gps.altitude)) + "\n" +
-    "Lon: " + rocket_data.gps.longitude + "    " +
-    "hVel: " + df.format(float(rocket_data.gps.horizontal_velocity) * .1) + "\n";
+    "Sat: " + str(int(nav.gps.sat_count)) +
+    "\nLat: " + nav.gps.latitude + "    " +
+    "Alt: " + df.format(float(nav.gps.altitude)) + "\n" +
+    "Lon: " + nav.gps.longitude + "    " +
+    "hVel: " + df.format(float(nav.gps.horizontal_velocity) * .1) + "\n";
 
   gps_label.setText(gps_data);
 
   String bar_data = "Barometer\n\n" +
-    "Alt: " + df.format(float(rocket_data.barometer_altitude));
+    "Alt1: " + df.format(float(nav.barometer_alt1)) + "\n" +
+    "Alt2: " + df.format(float(nav.barometer_alt2));
   bar_label.setText(bar_data);
 
   String imu_data = "IMU\n" +
-    "\nAx: " + df.format(float(rocket_data.imu.accel_x) * .1) + "\n" +
-    "Ay: " + df.format(float(rocket_data.imu.accel_y) * .1) + "\n" +
-    "Az: " + df.format(float(rocket_data.imu.accel_z) * .1) + "\n" +
-    "\nGx: " + df.format(float(rocket_data.imu.gyro_x) * .1) + "\n" +
-    "Gy: " + df.format(float(rocket_data.imu.gyro_y) * .1) + "\n" +
-    "Gz: " + df.format(float(rocket_data.imu.gyro_z) * .1);
+    "\nAx: " + df.format(float(nav.imu.accel_x) * .1) + "\n" +
+    "Ay: " + df.format(float(nav.imu.accel_y) * .1) + "\n" +
+    "Az: " + df.format(float(nav.imu.accel_z) * .1) + "\n" +
+    "Mx: " + df.format(float(nav.imu.mag_x) * .1) + "\n" +
+    "My: " + df.format(float(nav.imu.mag_y) * .1) + "\n" +
+    "Mz: " + df.format(float(nav.imu.mag_z) * .1) + "\n" +
+    "\nGx: " + df.format(float(nav.imu.gyro_x) * .1) + "\n" +
+    "Gy: " + df.format(float(nav.imu.gyro_y) * .1) + "\n" +
+    "Gz: " + df.format(float(nav.imu.gyro_z) * .1);
   imu_label.setText(imu_data);
 
   String kalman_data = "Kalman\n\n" +
-    "Alt: " + df.format(float(rocket_data.kalman.altitude)*.1) + "\n" +
-    "Max Alt: " + df.format(float(rocket_data.kalman.altitude)*.1) + "\n" +
-    "Vel: " + df.format(float(rocket_data.kalman.vel_z)*.1) + "\n" +
-    "Acel: " + df.format(float(rocket_data.kalman.acel_z)*.1) + "\n" +
-    "q1: " + df.format(float(rocket_data.kalman.q1)) + "\n" +
-    "q2: " + df.format(float(rocket_data.kalman.q2)) + "\n" +
-    "q3: " + df.format(float(rocket_data.kalman.q3)) + "\n" +
-    "q4: " + df.format(float(rocket_data.kalman.q4));
+    "Alt: " + df.format(float(nav.kalman.altitude)*.1) + "\n" +
+    "Max Alt: " + df.format(float(nav.kalman.max_altitude)*.1) + "\n" +
+    "Vel: " + df.format(float(nav.kalman.velocity_z)*.1) + "\n" +
+    "Acel: " + df.format(float(nav.kalman.acceleration_z)*.1) + "\n" +
+    "q1: " + df.format(float(nav.kalman.q1)) + "\n" +
+    "q2: " + df.format(float(nav.kalman.q2)) + "\n" +
+    "q3: " + df.format(float(nav.kalman.q3)) + "\n" +
+    "q4: " + df.format(float(nav.kalman.q4));
   kalman_label.setText(kalman_data);
 }
 
