@@ -1,20 +1,24 @@
 
 
 class RocketData {
-  byte state = 0;
+  RocketState state = 0;
   boolean flash_running;
   class Valves {
-    boolean purge_top,
-      purge_bot,
-      chamber;
+    boolean vent,
+      abort,
+      main;
   }
   class Tank {
-    short pressure_top,
-      pressure_bot,
-      temp_top,
-      temp_bot;
+    short pressure,
+      temp_probe1,
+      temp_probe2,
+      temp_probe3,
+      temp_probe4,
+      temp_probe5;
   }
-  short chamber_pressure;
+  class Chamber {
+    short pressure,
+          temperature;
   class GPS {
     byte satellite_count;
     short altitude;

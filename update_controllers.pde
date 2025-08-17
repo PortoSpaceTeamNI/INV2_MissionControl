@@ -4,10 +4,10 @@ void updateControllersData() {
   } else {
     log_display_filling.setText("Filling: " + filling_data.getState());
   }
-  String he_data = "He\n" +
+  String he_data = "N2\n" +
     "P: " + df.format(float(filling_data.he.pressure) * .01) + " bar\n" +
     "T: " + df.format(float(filling_data.he.temperature) * .1) + " ºC";
-  he_label.setText(he_data);
+  n2_label.setText(he_data);
   String n2o_data = "N2O\n" +
     "P: " + df.format(float(filling_data.n2o.pressure) * .01) + " bar\n" +
     "T: " + df.format(float(filling_data.n2o.temperature)* .1) + " ºC\n" +
@@ -85,7 +85,7 @@ void updateControllersData() {
 void updateControllersPos(String tab) {
   if (tab == "default") {
     // fill
-    he_label.setPosition(width*.25, height*.05);
+    n2_label.setPosition(width*.25, height*.05);
     n2o_label.setPosition(width*.35, height*.05);
     line_label.setPosition(width*.45, height*.05);
     //rocket
@@ -95,7 +95,7 @@ void updateControllersPos(String tab) {
     chamber_label.setPosition(width*.45, height*.2);
 
     //fill
-    he_toggle.setPosition(width*.25, height*.15);
+    n2_toggle.setPosition(width*.25, height*.15);
     n2o_toggle.setPosition(width*.35, height*.15);
     line_toggle.setPosition(width*.45, height*.15);
     // rocket
@@ -113,14 +113,14 @@ void updateControllersPos(String tab) {
     imu_label.setPosition(width*.25, height*.32);
     kalman_label.setPosition(width*.35, height*.32);
   } else if (tab == "filling") {
-    he_label.setPosition(displayWidth*.5, displayHeight*.47);
+    n2_label.setPosition(displayWidth*.5, displayHeight*.47);
     n2o_label.setPosition(displayWidth*.5, displayHeight*.69);
     line_label.setPosition(displayWidth*.4, displayHeight*.48);
     tt_label.setPosition(displayWidth*.31, displayHeight*.35);
     tb_label.setPosition(displayWidth*.39, displayHeight*.83);
     chamber_label.setPosition(width*.25, height*.89);
 
-    he_toggle.setPosition(width*.5, height*.55);
+    n2_toggle.setPosition(width*.5, height*.55);
     n2o_toggle.setPosition(width*.5, height*.65);
     line_toggle.setPosition(width*.385, height*.62);
 

@@ -9,8 +9,8 @@ Chart fillingChart, launchChart;
 Textlabel pressureLabel, temperatureLabel, weightLabel;
 Textlabel altitudeLabel, velocityLabel, accelerationLabel;
 Textlabel ematch_label, chamber_temps_label, chamber_label;
-Textlabel he_label, n2o_label, line_label, tt_label, tb_label;
-Toggle he_toggle, n2o_toggle, line_toggle, tt_toggle, tb_toggle, chamber_toggle;
+Textlabel n2_label, n2o_label, line_label, tt_label, tb_label;
+Toggle n2_toggle, n2o_toggle, line_toggle, tt_toggle, tb_toggle, chamber_toggle;
 Toggle status_toggle;
 Textlabel gps_label, bar_label, imu_label, kalman_label;
 

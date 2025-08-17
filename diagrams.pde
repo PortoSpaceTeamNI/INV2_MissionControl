@@ -6,7 +6,7 @@ void setupDiagrams() {
   fill_diagram = loadImage(fill_img);
   setupGPSMap();
   setup3D();
-  he_label = cp5.addLabel("He\nT : ####\nP : ####")
+  n2_label = cp5.addLabel("N2\nP : ####")
     .setColor(labelColor)
     .setFont(font)
     .moveTo("global")
@@ -15,7 +15,7 @@ void setupDiagrams() {
     .setLock(true)
     ;
 
-  he_toggle = cp5.addToggle("HE")
+  n2_toggle = cp5.addToggle("N2")
     .setPosition(width*.495, height*.553)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -121,8 +121,8 @@ void setupDiagrams() {
     .moveTo("global");
 
 
-  diagram_labels = Arrays.asList(he_label, n2o_label, line_label, tt_label, tb_label);
-  valve_toggles = Arrays.asList(tt_toggle, tb_toggle, chamber_toggle, he_toggle, n2o_toggle, line_toggle);
+  diagram_labels = Arrays.asList(n2_label, n2o_label, line_label, tt_label, tb_label);
+  valve_toggles = Arrays.asList(tt_toggle, tb_toggle, chamber_toggle, n2_toggle, n2o_toggle, line_toggle);
 }
 
 void updateDiagrams() {
@@ -141,10 +141,10 @@ void updateDiagrams() {
   // he valve
   if (filling_data.he.valve) {
     fill(0, 255, 0);
-    he_toggle.setState(true);
+    n2_toggle.setState(true);
   } else {
     fill(255, 0, 0);
-    he_toggle.setState(false);
+    n2_toggle.setState(false);
   }
   //circle(width*.56, height*.633, height*.018);
 
@@ -241,14 +241,14 @@ void multi_tab_controllers(String tab) {
       label.hide();
     }
     line_toggle.hide();
-    he_toggle.hide();
+    n2_toggle.hide();
     n2o_toggle.hide();
   } else {
     for (Textlabel label : diagram_labels) {
       label.show();
     }
     line_toggle.show();
-    he_toggle.show();
+    n2_toggle.show();
     n2o_toggle.show();
   }
 }
