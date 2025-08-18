@@ -1,5 +1,5 @@
 // controllers
-Textfield[] textfields = new Textfield[4];
+Textfield[] param_fields = new Textfield[4];
 Textlabel log_display_rocket, log_display_filling, log_display_ignition;
 Textlabel ack_display;
 Textlabel log_stats;
@@ -8,9 +8,9 @@ ArrayDeque<String> history_deque;
 Chart fillingChart, launchChart;
 Textlabel pressureLabel, temperatureLabel, weightLabel;
 Textlabel altitudeLabel, velocityLabel, accelerationLabel;
-Textlabel ematch_label, chamber_temps_label, chamber_label;
-Textlabel n2_label, n2o_label, line_label, tt_label, tb_label;
-Toggle n2_toggle, n2o_toggle, line_toggle, tt_toggle, tb_toggle, chamber_toggle;
+Textlabel ematch_label;
+Textlabel n2_label, n2o_label, quick_dc_label, uf_label, lf_label, chamber_label;
+Toggle n2_fill_toggle, n2_purge_toggle, n2_quick_dc_toggle, n2o_fill_toggle, n2o_purge_toggle, n2o_quick_dc_toggle, pressurizing_toggle, vent_toggle, abort_toggle, main_toggle;
 Toggle status_toggle;
 Textlabel gps_label, bar_label, imu_label, kalman_label;
 
@@ -42,7 +42,7 @@ void setupControllers() {
 
 
   // Textfields for parameters and limits
-  textfields[0] = cp5.addTextfield("Target P")
+  param_fields[0] = cp5.addTextfield("Target P")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.23, displayHeight*.05)
@@ -51,7 +51,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[1] = cp5.addTextfield("Trigger P")
+  param_fields[1] = cp5.addTextfield("Trigger P")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.33, displayHeight*.05)
@@ -60,7 +60,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  textfields[2] = cp5.addTextfield("Target W")
+  param_fields[2] = cp5.addTextfield("Target W")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.43, displayHeight*.05)
@@ -69,7 +69,7 @@ void setupControllers() {
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
     
-  textfields[3] = cp5.addTextfield("Trigger T")
+  param_fields[3] = cp5.addTextfield("Trigger T")
     .setAutoClear(false)
     .setColor(defaultColor)
     .setPosition(displayWidth*.53, displayHeight*.05)

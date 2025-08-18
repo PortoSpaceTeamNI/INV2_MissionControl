@@ -10,8 +10,8 @@ public void controlEvent(ControlEvent event) {
     }
     thread("serialThread");
   } else if (event.isFrom("Execute")) {
-    for (int i = 0; i < 3; i++) {
-      String input = textfields[i].getText();
+    for (int i = 0; i < param_fields.length; i++) {
+      String input = param_fields[i].getText();
       try {
         prog_inputs[i] = Integer.parseInt(input);
       }
@@ -38,7 +38,7 @@ public void controlEvent(ControlEvent event) {
   } else if (event.isFrom("program")) {
     selected_index = (int) event.getValue();
     String program = programs.get(selected_index);
-    for (int i = 0; i < 4; i++) { // don't know why 4 works, should be 5 ???
+    for (int i = 0; i < param_fields.length; i++) { 
       String param = prog_params.get(i);
       if (prog_param_map.get(program)[i]) {
         cp5.getController(param).setColor(defaultColor);

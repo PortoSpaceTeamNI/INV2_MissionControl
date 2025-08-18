@@ -67,24 +67,28 @@ void updateControllersPos(String tab) {
     // fill
     n2_label.setPosition(width*.25, height*.05);
     n2o_label.setPosition(width*.35, height*.05);
-    line_label.setPosition(width*.45, height*.05);
+    quick_dc_label.setPosition(width*.45, height*.05);
     //rocket
-    tt_label.setPosition(width*.25, height*.2);
-    tb_label.setPosition(width*.35, height*.2);
+    uf_label.setPosition(width*.25, height*.2);
+    lf_label.setPosition(width*.35, height*.2);
     //ignition
     chamber_label.setPosition(width*.45, height*.2);
 
     //fill
-    n2_toggle.setPosition(width*.25, height*.15);
-    n2o_toggle.setPosition(width*.35, height*.15);
-    line_toggle.setPosition(width*.45, height*.15);
+    n2_fill_toggle.setPosition(width*.25, height*.15);
+    n2o_fill_toggle.setPosition(width*.35, height*.15);
+    n2_purge_toggle.setPosition(width*.45, height*.15);
+    n2o_purge_toggle.setPosition(width*.55, height*.15);
+    
     // rocket
-    tt_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    tb_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    chamber_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    tt_toggle.setPosition(width*.25, height*.28);
-    tb_toggle.setPosition(width*.35, height*.28);
-    chamber_toggle.setPosition(width*.45, height*.28);
+    pressurizing_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    vent_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    abort_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    main_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    pressurizing_toggle.setPosition(width*.15, height*.28);
+    vent_toggle.setPosition(width*.25, height*.28);
+    abort_toggle.setPosition(width*.35, height*.28);
+    main_toggle.setPosition(width*.45, height*.28);
 
     //other
     ematch_label.setPosition(width*.55, height*.05);
@@ -95,33 +99,42 @@ void updateControllersPos(String tab) {
   } else if (tab == "filling") {
     n2_label.setPosition(displayWidth*.5, displayHeight*.47);
     n2o_label.setPosition(displayWidth*.5, displayHeight*.69);
-    line_label.setPosition(displayWidth*.4, displayHeight*.48);
-    tt_label.setPosition(displayWidth*.31, displayHeight*.35);
-    tb_label.setPosition(displayWidth*.39, displayHeight*.83);
+    quick_dc_label.setPosition(displayWidth*.4, displayHeight*.48);
+    uf_label.setPosition(displayWidth*.31, displayHeight*.35);
+    lf_label.setPosition(displayWidth*.39, displayHeight*.83);
     chamber_label.setPosition(width*.25, height*.89);
 
-    n2_toggle.setPosition(width*.5, height*.55);
-    n2o_toggle.setPosition(width*.5, height*.65);
-    line_toggle.setPosition(width*.385, height*.62);
+    n2_fill_toggle.setPosition(width*.5, height*.55);
+    n2o_fill_toggle.setPosition(width*.5, height*.65);
+    n2_purge_toggle.setPosition(width*.5, height*.55);
+    n2o_purge_toggle.setPosition(width*.5, height*.65);
+    n2_quick_dc_toggle.setPosition(width*.385, height*.62);
+    n2o_quick_dc_toggle.setPosition(width*.385, height*.62);
 
-    tt_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    tb_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    chamber_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    tt_toggle.setPosition(width*.265, height*.41);
-    tb_toggle.setPosition(width*.32, height*.84);
-    chamber_toggle.setPosition(width*.265, height*.8);
+    vent_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    abort_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    main_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    pressurizing_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    
+    vent_toggle.setPosition(width*.265, height*.41);
+    abort_toggle.setPosition(width*.32, height*.84);
+    main_toggle.setPosition(width*.265, height*.8);
+    pressurizing_toggle.setPosition(width*.265, height*.8);
+    
   } else if (tab == "launch") {
     ematch_label.setPosition(displayWidth*.4, displayHeight*.05);
     chamber_label.setPosition(displayWidth*.55, displayHeight*.05);
     gps_label.setPosition(width*.23, height*.4);
     kalman_label.setPosition(width*.25, height*.5);
 
-    tt_toggle.setPosition(width*.095, height*.07);
-    tb_toggle.setPosition(width*.14, height*.3);
-    chamber_toggle.setPosition(width*.095, height*.45);
+    vent_toggle.setPosition(width*.095, height*.07);
+    abort_toggle.setPosition(width*.14, height*.3);
+    main_toggle.setPosition(width*.095, height*.45);
+    pressurizing_toggle.setPosition(width*.095, height*.45);
 
-    tt_toggle.setSize((int)(width*.02), (int)(height*.02));
-    tb_toggle.setSize((int)(width*.02), (int)(height*.02));
-    chamber_toggle.setSize((int)(width*.02), (int)(height*.02));
+    vent_toggle.setSize((int)(width*.02), (int)(height*.02));
+    pressurizing_toggle.setSize((int)(width*.02), (int)(height*.02));
+    abort_toggle.setSize((int)(width*.02), (int)(height*.02));
+    main_toggle.setSize((int)(width*.02), (int)(height*.02));
   }
 }
