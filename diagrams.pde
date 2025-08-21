@@ -49,7 +49,7 @@ void setupDiagrams() {
     .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
     .setLock(true)
     ;
-  n2o_fill_toggle = cp5.addToggle("N2O fill")
+  n2o_fill_toggle = cp5.addToggle("N2O fill toggle")
     .setPosition(width*.495, height*.65)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -61,7 +61,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  n2o_purge_toggle = cp5.addToggle("N2O purge")
+  n2o_purge_toggle = cp5.addToggle("N2O purge toggle")
     .setPosition(width*.495, height*.65)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -81,7 +81,7 @@ void setupDiagrams() {
     .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
     .setLock(true)
     ;
-  n2o_quick_dc_toggle = cp5.addToggle("N2O quick dc")
+  n2o_quick_dc_toggle = cp5.addToggle("N2O quick dc toggle")
     .setPosition(width*.394, height*.566)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -93,7 +93,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  n2_quick_dc_toggle = cp5.addToggle("N2 quick dc")
+  n2_quick_dc_toggle = cp5.addToggle("N2 quick dc toggle")
     .setPosition(width*.394, height*.566)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -113,7 +113,7 @@ void setupDiagrams() {
     .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
     .setLock(true)
     ;
-  vent_toggle = cp5.addToggle("Vent")
+  vent_toggle = cp5.addToggle("Vent Toggle")
     .setPosition(width*.275, height*.405)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -125,7 +125,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  pressurizing_toggle = cp5.addToggle("Pressurizing")
+  pressurizing_toggle = cp5.addToggle("Pressurizing Toggle")
     .setPosition(width*.275, height*.405)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -145,7 +145,7 @@ void setupDiagrams() {
     .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
     .setLock(true)
     ;
-  abort_toggle = cp5.addToggle("Abort")
+  abort_toggle = cp5.addToggle("Abort Toggle")
     .setPosition(width*.275, height*.83)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -157,7 +157,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
-  main_toggle = cp5.addToggle("Main")
+  main_toggle = cp5.addToggle("Main Toggle")
     .setPosition(width*.345, height*.85)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
