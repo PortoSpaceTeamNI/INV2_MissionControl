@@ -53,8 +53,6 @@ int max_size = 100000;
 int[] prog_inputs = new int[4];
 int selected_index = -1;
 
-boolean r_flash_log, f_flash_log;
-
 Tab fillTab;
 Tab launchTab;
 
@@ -93,7 +91,7 @@ void setup() {
   logDir = directoryPath + File.separator;
   file = new File(logDir+"log_"+day()+"_"+month()+"_"+year()+"_"+hour()+minute()+second()+".bin");
   PFont.list();
-  font = createFont("arial", displayWidth*.013);
+  font = createFont("arial", width*.013);
   cp5 = new ControlP5(this);
 
   init_data_objects(); // in data models tab
@@ -124,19 +122,12 @@ void draw() {
     }
   }
 
-  if (r_flash_log == true) {
+  if (obc.sd_logging == true) {
     fill(0, 255, 0);
   } else {
     fill(255, 0, 0);
   }
-  circle(width*.79, height*.72, height*.018);
-
-  if (f_flash_log == true) {
-    fill(0, 255, 0);
-  } else {
-    fill(255, 0, 0);
-  }
-  circle(width*.79, height*.77, height*.018);
+  circle(width*.79, height*.724, height*.018);
 }
 
 // This method ensures the serial port is closed properly when the program is exited

@@ -89,6 +89,16 @@ public void controlEvent(ControlEvent event) {
     }
   } else if (event.isFrom("Manual Toggle")) {
     int allow_manual = (int) event.getController().getValue();
+    Toggle toggle = (Toggle) event.getController();
+    if (allow_manual == 1) {
+          toggle.setColorForeground(color(0, 100, 0))
+            .setColorBackground(color(0, 255, 0))
+            .setColorActive(color(0, 100, 0));     // Green when on
+        } else if (allow_manual == 0) {
+          toggle.setColorForeground(color(100, 0, 0)) // Red when off
+            .setColorActive(color(100, 0, 0))    // Red when off
+            .setColorBackground(color(255, 0, 0));
+        }
     byte[] payload = {(byte)allow_manual};
     send((byte)Command.MANUAL_ENABLE.ordinal(), payload);
   }

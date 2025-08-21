@@ -6,17 +6,26 @@ void setupDiagrams() {
   fill_diagram = loadImage(fill_img);
   setupGPSMap();
   setup3D();
-  n2_label = cp5.addLabel("N2\nP : ####")
+  n2_p_label = cp5.addLabel("N2P")
     .setColor(labelColor)
     .setFont(font)
     .moveTo("global")
-    .setPosition(displayWidth*.5, displayHeight*.47)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
+    .setPosition(width*.4, height*.5)
+    .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
+    ;
+  n2_label = cp5.addLabel("N2")
+    .setColor(labelColor)
+    .setFont(font)
+    .moveTo("global")
+    .setPosition(width*.4, height*.5)
+    .setSize((int)(width*.1), (int)(height*.1))
+    .setLock(true)
+    .setText("N2")
     ;
 
   n2_fill_toggle = cp5.addToggle("N2 Fill")
-    .setPosition(width*.495, height*.553)
+    .setPosition(width*.48, height*.52)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
     .setMode(ControlP5.SWITCH)
@@ -41,14 +50,40 @@ void setupDiagrams() {
     .moveTo("global")
     ;
     
-  n2o_label = cp5.addLabel("N2O\nT : ####\nP : ####\nW : ####")
+  n2o_p_label = cp5.addLabel("N2OP")
     .setColor(labelColor)
     .setFont(font)
     .moveTo("global")
-    .setPosition(displayWidth*.5, displayHeight*.69)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
+    .setPosition(width*.5, height*.69)
+    .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
     ;
+  n2o_t_label = cp5.addLabel("N2OT")
+    .setColor(labelColor)
+    .setFont(font)
+    .moveTo("global")
+    .setPosition(width*.5, height*.69)
+    .setSize((int)(width*.1), (int)(height*.1))
+    .setLock(true)
+    ;
+  n2o_w_label = cp5.addLabel("N2OW")
+    .setColor(labelColor)
+    .setFont(font)
+    .moveTo("global")
+    .setPosition(width*.5, height*.69)
+    .setSize((int)(width*.1), (int)(height*.1))
+    .setLock(true)
+    ;
+  n2o_label = cp5.addLabel("N2O")
+    .setColor(labelColor)
+    .setFont(font)
+    .moveTo("global")
+    .setPosition(width*.5, height*.69)
+    .setSize((int)(width*.1), (int)(height*.1))
+    .setLock(true)
+    .setText("N2O")
+    ;
+  
   n2o_fill_toggle = cp5.addToggle("N2O fill toggle")
     .setPosition(width*.495, height*.65)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
@@ -77,8 +112,8 @@ void setupDiagrams() {
     .setColor(labelColor)
     .setFont(font)
     .moveTo("global")
-    .setPosition(displayWidth*.4, displayHeight*.48)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
+    .setPosition(width*.4, height*.48)
+    .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
     ;
   n2o_quick_dc_toggle = cp5.addToggle("N2O quick dc toggle")
@@ -105,12 +140,12 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
-  uf_label = cp5.addLabel("Upper Feed\nT1 : ####\nT2 : ####\n")
+  n2o_tank_label = cp5.addLabel("N2O Tank")
     .setColor(labelColor)
     .setFont(font)
     .moveTo("global")
-    .setPosition(displayWidth*.31, displayHeight*.35)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
+    .setPosition(width*.31, height*.35)
+    .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
     ;
   vent_toggle = cp5.addToggle("Vent Toggle")
@@ -136,15 +171,7 @@ void setupDiagrams() {
     .setColorBackground(color(255, 0, 0))
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
-
-  lf_label = cp5.addLabel("Lower Feed\nT1 : ####\nT2 : ####\nT3 : ####\nP : ####")
-    .setColor(labelColor)
-    .setFont(font)
-    .moveTo("global")
-    .setPosition(displayWidth*.25, displayHeight*.89)
-    .setSize((int)(displayWidth*.1), (int)(displayHeight*.1))
-    .setLock(true)
-    ;
+    
   abort_toggle = cp5.addToggle("Abort Toggle")
     .setPosition(width*.275, height*.83)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
@@ -170,7 +197,7 @@ void setupDiagrams() {
     .moveTo("global");
 
 
-  diagram_labels = Arrays.asList(n2o_label, n2_label, quick_dc_label, uf_label, lf_label, chamber_label);
+  diagram_labels = Arrays.asList(n2o_label, n2_label, quick_dc_label, n2o_tank_label, chamber_label);
   valve_toggles = Arrays.asList(pressurizing_toggle, vent_toggle, abort_toggle, main_toggle, n2_purge_toggle, n2o_purge_toggle, n2_fill_toggle, n2o_fill_toggle, n2_quick_dc_toggle, n2o_quick_dc_toggle);
 }
 
@@ -180,7 +207,7 @@ void updateDiagrams() {
   if (cp5.getTab("launch").isActive()) {
     update3D();
   }
-  if (cp5.getTab("filling").isActive()) {
+  else {
     image(fill_diagram, width*.23, height*.38, fill_diagram.width* 1.2 * width/1920, fill_diagram.height * 1.2 * height/1080); // scale image with display size
   }
   for ( Toggle toggle : valve_toggles) {
@@ -195,7 +222,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2_fill_toggle.setState(false);
   }
-  //circle(width*.56, height*.633, height*.018);
 
   // he valve
   if (hydra_fs.n2.purge_valve) {
@@ -205,7 +231,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2_purge_toggle.setState(false);
   }
-  //circle(width*.56, height*.633, height*.018);
   
   // n2o valve
   if (hydra_fs.n2o.fill_valve) {
@@ -215,7 +240,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2o_fill_toggle.setState(false);
   }
-  //circle(width*.56, height*.73, height*.018);
   
   // n2o valve
   if (hydra_fs.n2o.purge_valve) {
@@ -225,7 +249,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2o_purge_toggle.setState(false);
   }
-  //circle(width*.56, height*.73, height*.018);
 
   // line valve
   if (hydra_fs.quick_dc.n2o_valve) {
@@ -235,7 +258,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2o_quick_dc_toggle.setState(false);
   }
-  //circle(width*.423, height*.698, height*.018);
   
   // line valve
   if (hydra_fs.quick_dc.n2_valve) {
@@ -245,7 +267,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     n2_quick_dc_toggle.setState(false);
   }
-  //circle(width*.423, height*.698, height*.018);
 
   // tt valve
   if (hydra_uf.vent_valve) {
@@ -255,7 +276,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     vent_toggle.setState(false);
   }
-  //circle(width*.304, height*.46, height*.018);
   
   // tt valve
   if (hydra_uf.pressurizing_valve) {
@@ -265,7 +285,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     pressurizing_toggle.setState(false);
   }
-  //circle(width*.304, height*.46, height*.018);
 
   // tb valve
   if (hydra_lf.abort_valve) {
@@ -275,7 +294,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     abort_toggle.setState(false);
   }
-  //circle(width*.304, height*.935, height*.018);
 
   if (hydra_lf.main_valve) {
     fill(0, 255, 0);
@@ -284,7 +302,6 @@ void updateDiagrams() {
     fill(255, 0, 0);
     main_toggle.setState(false);
   }
-  //circle(width*.304, height*.935, height*.018);
 
   for (Toggle toggle : valve_toggles) {
     boolean v_state = toggle.getState();
@@ -333,6 +350,8 @@ void multi_tab_controllers(String tab) {
     n2_purge_toggle.hide();
     n2_fill_toggle.hide();
     n2o_fill_toggle.hide();
+    n2_quick_dc_toggle.hide();
+    n2o_quick_dc_toggle.hide();
   } else {
     for (Textlabel label : diagram_labels) {
       label.show();
@@ -341,5 +360,7 @@ void multi_tab_controllers(String tab) {
     n2o_purge_toggle.show();
     n2_fill_toggle.show();
     n2o_fill_toggle.show();
+    n2_quick_dc_toggle.show();
+    n2o_quick_dc_toggle.show();
   }
 }

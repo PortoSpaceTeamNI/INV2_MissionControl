@@ -1,13 +1,25 @@
 void updateControllersData() {
-  String n2_data = "N2\n" +
-    "P: " + df.format(float(hydra_fs.n2.pressure) * .01) + " bar\n";
-  n2_label.setText(n2_data);
-  String n2o_data = "N2O\n" +
-    "P: " + df.format(float(hydra_fs.n2o.pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(hydra_fs.n2o.temperature)* .1) + " ºC\n" +
-    "W: " + df.format(float(lift_fs.n2o_loadcell) * .1) + " kg";
-  n2o_label.setText(n2o_data);
+  n2_p_label.setText(df.format(float(hydra_fs.n2.pressure) * .01) + " bar");
+  
+  n2o_p_label.setText(df.format(float(hydra_fs.n2o.pressure) * .01) + " bar");
+  n2o_t_label.setText(df.format(float(hydra_fs.n2o.temperature) * .01) + " ºC");
+  n2o_w_label.setText(df.format(float(lift_fs.n2o_loadcell) * .1) + " kg");
 
+  String n2o_tank_data = "N2O Tank\n" +
+    "UF\n" + 
+    df.format(float(hydra_uf.probe_thermo1) * .01) + " ºC\n" +
+    df.format(float(hydra_uf.probe_thermo2) * .01) + " ºC\n" +
+    "LF\n" + 
+    df.format(float(hydra_lf.probe_thermo1) * .01) + " ºC\n" +
+    df.format(float(hydra_lf.probe_thermo2) * .01) + " ºC\n" +
+    df.format(float(hydra_lf.probe_thermo3) * .01) + " ºC\n" +
+    df.format(float(hydra_lf.tank_pressure) * .01) + " bar";
+  n2o_tank_label.setText(n2o_tank_data);
+  
+  String quick_dc_data =
+    df.format(float(hydra_fs.quick_dc.pressure) * .01) + "\n  bar";
+  quick_dc_label.setText(quick_dc_data);
+  
   if (millis() - last_r_ping > doubt_timeout) {
     log_display_rocket.setText("State: " + obc.state.name() + "?");
   } else {
@@ -45,12 +57,12 @@ void updateControllersData() {
     "Mx: " + df.format(float(nav.imu.mag_x) * .1) + "\n" +
     "My: " + df.format(float(nav.imu.mag_y) * .1) + "\n" +
     "Mz: " + df.format(float(nav.imu.mag_z) * .1) + "\n" +
-    "\nGx: " + df.format(float(nav.imu.gyro_x) * .1) + "\n" +
+    "Gx: " + df.format(float(nav.imu.gyro_x) * .1) + "\n" +
     "Gy: " + df.format(float(nav.imu.gyro_y) * .1) + "\n" +
     "Gz: " + df.format(float(nav.imu.gyro_z) * .1);
   imu_label.setText(imu_data);
 
-  String kalman_data = "Kalman\n\n" +
+  String kalman_data = "Kalman\n" +
     "Alt: " + df.format(float(nav.kalman.altitude)*.1) + "\n" +
     "Max Alt: " + df.format(float(nav.kalman.max_altitude)*.1) + "\n" +
     "Vel: " + df.format(float(nav.kalman.velocity_z)*.1) + "\n" +
@@ -63,69 +75,11 @@ void updateControllersData() {
 }
 
 void updateControllersPos(String tab) {
-  if (tab == "default") {
-    // fill
-    n2_label.setPosition(width*.25, height*.05);
-    n2o_label.setPosition(width*.35, height*.05);
-    quick_dc_label.setPosition(width*.45, height*.05);
-    //rocket
-    uf_label.setPosition(width*.25, height*.2);
-    lf_label.setPosition(width*.35, height*.2);
-    //ignition
-    chamber_label.setPosition(width*.45, height*.2);
-
-    //fill
-    n2_fill_toggle.setPosition(width*.25, height*.15);
-    n2o_fill_toggle.setPosition(width*.35, height*.15);
-    n2_purge_toggle.setPosition(width*.45, height*.15);
-    n2o_purge_toggle.setPosition(width*.55, height*.15);
-    
-    // rocket
-    pressurizing_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    vent_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    abort_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    main_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    pressurizing_toggle.setPosition(width*.15, height*.28);
-    vent_toggle.setPosition(width*.25, height*.28);
-    abort_toggle.setPosition(width*.35, height*.28);
-    main_toggle.setPosition(width*.45, height*.28);
-
-    //other
-    ematch_label.setPosition(width*.55, height*.05);
-    gps_label.setPosition(width*.55, height*.15);
-    bar_label.setPosition(width*.45, height*.32);
-    imu_label.setPosition(width*.25, height*.32);
-    kalman_label.setPosition(width*.35, height*.32);
-  } else if (tab == "filling") {
-    n2_label.setPosition(displayWidth*.5, displayHeight*.47);
-    n2o_label.setPosition(displayWidth*.5, displayHeight*.69);
-    quick_dc_label.setPosition(displayWidth*.4, displayHeight*.48);
-    uf_label.setPosition(displayWidth*.31, displayHeight*.35);
-    lf_label.setPosition(displayWidth*.39, displayHeight*.83);
-    chamber_label.setPosition(width*.25, height*.89);
-
-    n2_fill_toggle.setPosition(width*.5, height*.55);
-    n2o_fill_toggle.setPosition(width*.5, height*.65);
-    n2_purge_toggle.setPosition(width*.5, height*.55);
-    n2o_purge_toggle.setPosition(width*.5, height*.65);
-    n2_quick_dc_toggle.setPosition(width*.385, height*.62);
-    n2o_quick_dc_toggle.setPosition(width*.385, height*.62);
-
-    vent_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    abort_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    main_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    pressurizing_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
-    
-    vent_toggle.setPosition(width*.265, height*.41);
-    abort_toggle.setPosition(width*.32, height*.84);
-    main_toggle.setPosition(width*.265, height*.8);
-    pressurizing_toggle.setPosition(width*.265, height*.8);
-    
-  } else if (tab == "launch") {
-    ematch_label.setPosition(displayWidth*.4, displayHeight*.05);
-    chamber_label.setPosition(displayWidth*.55, displayHeight*.05);
+  if (tab == "launch") {
+    ematch_label.setPosition(width*.4, height*.05);
+    chamber_label.setPosition(width*.55, height*.05);
     gps_label.setPosition(width*.23, height*.4);
-    kalman_label.setPosition(width*.25, height*.5);
+    kalman_label.setPosition(width*.24, height*.5);
 
     vent_toggle.setPosition(width*.095, height*.07);
     abort_toggle.setPosition(width*.14, height*.3);
@@ -136,5 +90,43 @@ void updateControllersPos(String tab) {
     pressurizing_toggle.setSize((int)(width*.02), (int)(height*.02));
     abort_toggle.setSize((int)(width*.02), (int)(height*.02));
     main_toggle.setSize((int)(width*.02), (int)(height*.02));
-  }
+  } else {
+    ematch_label.setPosition(width*.23, height*.05);
+    chamber_label.setPosition(width*.3, height*.1);
+    gps_label.setPosition(width*.23, height*.13);
+    kalman_label.setPosition(width*.41, height*.05);
+    
+    bar_label.setPosition(width*.5, height*.05);
+    imu_label.setPosition(width*.58, height*.05);
+    
+    n2_label.setPosition(width*.511, height*.451);
+    n2_p_label.setPosition(width*.443, height*.55);
+    
+    n2o_label.setPosition(width*.57, height*.6);
+    n2o_t_label.setPosition(width*.473, height*.822);
+    n2o_p_label.setPosition(width*.418, height*.773);
+    n2o_w_label.setPosition(width*.565, height*.932);
+    
+    quick_dc_label.setPosition(width*.385, height*.55);
+    n2o_tank_label.setPosition(width*.24, height*.66);
+    chamber_label.setPosition(width*.35, height*.85);
+
+    n2_fill_toggle.setPosition(width*.457, height*.5);
+    n2o_fill_toggle.setPosition(width*.44, height*.68);
+    n2_purge_toggle.setPosition(width*.433, height*.465);
+    n2o_purge_toggle.setPosition(width*.372, height*.717);
+    n2_quick_dc_toggle.setPosition(width*.348, height*.52);
+    n2o_quick_dc_toggle.setPosition(width*.348, height*.66);
+
+    vent_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    abort_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    main_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    pressurizing_toggle.setSize((int)(width*toggle_width), (int)(height*toggle_height));
+    
+    vent_toggle.setPosition(width*.299, height*.585);
+    abort_toggle.setPosition(width*.305, height*.871);
+    main_toggle.setPosition(width*.265, height*.935);
+    pressurizing_toggle.setPosition(width*.265, height*.58);
+    
+  } 
 }
