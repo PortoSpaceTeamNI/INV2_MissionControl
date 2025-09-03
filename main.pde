@@ -31,7 +31,7 @@ int last_status_time = 0;
 int last_r_ping = 0, last_f_ping = 0, last_i_ping = 0;
 float map_width, map_height, map_x1, map_y1;
 
-byte targetID;
+final byte targetID = 1;
 
 LinkedBlockingQueue<dataPacket> tx_queue = new LinkedBlockingQueue<dataPacket>();
 

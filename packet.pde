@@ -21,12 +21,12 @@ class dataPacket {
 
   byte[] getPacket() {
     byte[] final_packet = new byte[128];
-    final_packet = append(final_packet, PACKET_VERSION);
-    final_packet = append(final_packet, sender_id);
-    final_packet = append(final_packet, target_id);
-    final_packet = append(final_packet, command_id);
+    final_packet[0] = PACKET_VERSION;
+    final_packet[1] = sender_id;
+    final_packet[2] = target_id; 
+    final_packet[3] = command_id;
     for (int i = 0; i < payload.length; i++) {
-      final_packet = append(final_packet, payload[i]);
+      final_packet[i+4] = payload[i];
     }
     return final_packet;
   }

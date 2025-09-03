@@ -53,13 +53,8 @@ public void controlEvent(ControlEvent event) {
     send((byte)Command.FILL_RESUME.ordinal(), empty_payload);
   } else if (event.isFrom("Status")) {
     request_status();
-  } else if (event.isFrom("Select ID")) {
-    targetID = (byte) (event.getValue() + 1);
   } else if (event.isFrom("Abort")) {
-    byte lastID = targetID;
-    targetID = 4;
     send((byte)Command.ABORT.ordinal(), empty_payload);
-    targetID = lastID;
   } else if (event.isFrom("Arm")) {
     send((byte)Command.ARM.ordinal(), empty_payload);
   } else if (event.isFrom("Ready")) {
@@ -116,10 +111,7 @@ public void controlEvent(ControlEvent event) {
             .setColorBackground(color(255, 0, 0));
         }
         byte[] payload = {(byte)ValveToggle.valueOf(toggle.getName()).ordinal(), (byte) state};
-        byte lastID = targetID;
-        targetID = 4;
         send((byte)Command.MANUAL_EXEC.ordinal(), payload);
-        targetID = lastID;
       }
     }
   }

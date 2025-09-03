@@ -31,7 +31,7 @@ void serialThread() {
         if (history_deque.size() == history_capacity) {
           history_deque.removeFirst();
         }
-        history_deque.addLast("CMD -> " + Command.values()[last_cmd_sent & 0xFF]);
+        history_deque.addLast("CMD -> " + Command.values()[last_cmd_sent]);
         String history_string = "";
         for (String element : history_deque) {
           history_string += element + "\n";
@@ -136,15 +136,19 @@ void displayAck(dataPacket rx_packet) {
 }
 
 void send(byte command, byte[] payload) {
+  /*
   if (targetID == 0) {
     print("No ID selected\n");
     return;
   }
+  */
   //println(command, payload);
+  /*
   if (targetID == 4) {
     targetID = (byte)0xFF;
   }
-  tx_packet = new dataPacket(command, targetID, My_ID, payload);
+  */
+  tx_packet = new dataPacket(My_ID, targetID, command, payload);
   tx_packet.logPacket(LogEvent.MSG_SENT);
   if (myPort != null) {
     //byte[] packet = tx_packet.getPacket();
@@ -177,38 +181,8 @@ short createAskDataMask(AskData[] asks) {
 
 void auto_status() {
   if (millis() - last_status_time > status_interval && status_toggle_state == 1) {
-    byte oldID = targetID;
-    if (cp5.getTab("default").isActive()) {
-      if (last_status_id == 1) {
-        targetID = 2;
-        last_status_id = 2;
-      } else if (last_status_id == 2) {
-        targetID = 3;
-        last_status_id = 3;
-      } else {
-        targetID = 1;
-        last_status_id = 1;
-      }
-    } else if (cp5.getTab("filling").isActive()) {
-      if (last_status_id == 1) {
-        targetID = 2;
-        last_status_id = 2;
-      } else {
-        targetID = 1;
-        last_status_id = 1;
-      }
-    } else if (cp5.getTab("launch").isActive()) {
-      if (last_status_id == 1) {
-        targetID = 3;
-        last_status_id = 3;
-      } else {
-        targetID = 1;
-        last_status_id = 1;
-      }
-    }
     request_status();
     last_status_time = millis();
-    targetID = oldID;
   }
 }
 
