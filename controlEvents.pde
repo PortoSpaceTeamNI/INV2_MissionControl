@@ -21,7 +21,7 @@ public void controlEvent(ControlEvent event) {
       }
     }
     if (selected_index >= 0) {
-      byte[] payload = {prog_cmds[selected_index],
+      byte[] payload = {(byte)selected_index,
         (byte) ((prog_inputs[0] >> 8) & 0xff),
         (byte)(prog_inputs[0] & 0xff),
         (byte)((prog_inputs[1] >> 8) & 0xff),
@@ -94,8 +94,6 @@ public void controlEvent(ControlEvent event) {
             .setColorActive(color(100, 0, 0))    // Red when off
             .setColorBackground(color(255, 0, 0));
         }
-    byte[] payload = {(byte)allow_manual};
-    send((byte)Command.MANUAL_ENABLE.ordinal(), payload);
   }
   if (valve_toggles != null) {
     for (Toggle toggle : valve_toggles) {

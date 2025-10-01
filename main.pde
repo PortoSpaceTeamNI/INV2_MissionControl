@@ -15,7 +15,6 @@ dataPacket rx_packet;
 boolean port_selected = false;
 
 int last_read_time = 0;
-
 int last_r_log_time = 0;
 float r_log_rate = 0;
 int last_f_log_time = 0;
@@ -31,15 +30,15 @@ int last_status_time = 0;
 int last_r_ping = 0, last_f_ping = 0, last_i_ping = 0;
 float map_width, map_height, map_x1, map_y1;
 
-final byte targetID = 1;
+final byte obcID = 1;
 
 LinkedBlockingQueue<dataPacket> tx_queue = new LinkedBlockingQueue<dataPacket>();
 
 DecimalFormat df = new DecimalFormat("0.00");
 
-final byte My_ID = 0;
-byte[] rx_payload;
-ParseState currentParseState = ParseState.VERSION;
+final byte myID = 0;
+byte[] rx_payload = new byte[MAX_PAYLOAD_SIZE];
+ParseState currentParseState = ParseState.SYNC;
 int rx_payload_index = 0;
 byte[] empty_payload = {};
 
@@ -80,7 +79,7 @@ void setup() {
   String directoryPath = currentDirectory + File.separator + logFolder;
   File directory = new File(directoryPath);
   boolean directoryCreated = directory.mkdir();
-
+  new_packet = new dataPacket((byte)0, (byte)0, (byte)0, empty_payload);
   history_deque = new ArrayDeque<>(history_capacity);
 
   if (directoryCreated) {

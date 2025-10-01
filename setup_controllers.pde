@@ -1,5 +1,5 @@
 // controllers
-Textfield[] param_fields = new Textfield[4];
+Textfield[] param_fields = new Textfield[5];
 Textlabel log_display_rocket, log_display_filling, log_display_ignition;
 Textlabel ack_display;
 Textlabel log_stats;
@@ -45,7 +45,7 @@ void setupControllers() {
   param_fields[0] = cp5.addTextfield("Target P")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(width*.23, height*.05)
+    .setPosition(width*.2, height*.05)
     .setSize((int)(width*.09), (int)(height*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
@@ -54,16 +54,16 @@ void setupControllers() {
   param_fields[1] = cp5.addTextfield("Trigger P")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(width*.33, height*.05)
+    .setPosition(width*.3, height*.05)
     .setSize((int)(width*.09), (int)(height*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
     .moveTo("filling");
 
-  param_fields[2] = cp5.addTextfield("Target W")
+  param_fields[2] = cp5.addTextfield("Target T")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(width*.43, height*.05)
+    .setPosition(width*.4, height*.05)
     .setSize((int)(width*.09), (int)(height*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
@@ -72,7 +72,16 @@ void setupControllers() {
   param_fields[3] = cp5.addTextfield("Trigger T")
     .setAutoClear(false)
     .setColor(defaultColor)
-    .setPosition(width*.53, height*.05)
+    .setPosition(width*.5, height*.05)
+    .setSize((int)(width*.09), (int)(height*.05))
+    .setFont(font)
+    .setInputFilter(ControlP5.FLOAT)
+    .moveTo("filling");
+  
+  param_fields[4] = cp5.addTextfield("Target W")
+    .setAutoClear(false)
+    .setColor(defaultColor)
+    .setPosition(width*.6, height*.05)
     .setSize((int)(width*.09), (int)(height*.05))
     .setFont(font)
     .setInputFilter(ControlP5.FLOAT)
@@ -80,8 +89,8 @@ void setupControllers() {
 
   // Send button
   cp5.addButton("Execute")
-    .setPosition(width*.63, height*.05)
-    .setSize((int)(width*.1), (int)(height*.05))
+    .setPosition(width*button_x1, height*.3)
+    .setSize((int)(width*button_width), (int)(height*button_height))
     .moveTo("filling")
     .setColor(defaultColor)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)

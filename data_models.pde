@@ -1,6 +1,6 @@
  class OBC {
-   RocketState state = RocketState.IDLE;
-   RocketSubState substate = RocketSubState.NONE;
+   MainState state = MainState.IDLE;
+   FillingState filling_state = FillingState.FP_NONE;
    boolean sd_logging;
  };
  

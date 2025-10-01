@@ -9,12 +9,10 @@ int chart_interval = 200; // ms
 int baudRate = 115200;
 
 final byte MyID = (byte) 0x00;
-final byte PACKET_VERSION = (byte)0x01;
+final byte SYNC_BYTE = (byte)0x55;
 
-List<String> programs = Arrays.asList("None", "Fill COPV", "Pre Pressurize", "Fill N2O", "Post Pressurize");
-byte[] prog_cmds = {(byte)0x00, (byte)0x01, (byte)0x02, (byte)0x03, (byte)0x04, (byte)0x05};
-
-List<String> prog_params = Arrays.asList("Target P", "Trigger P", "Target W", "Trigger T");
+List<String> programs = Arrays.asList("None", "Safe Idle", "Fill N2", "Pre Pressurize", "Fill N2O", "Post Pressurize");
+List<String> prog_params = Arrays.asList("Target P", "Trigger P", "Target T", "Trigger T", "Target W");
 List<String> IDs = Arrays.asList( "1 : Rocket", "2 : Filling Station", "3 : Ignition", "4 : Broadcast");
 
 String logFileName = "log.txt";
