@@ -49,7 +49,7 @@ int last_status_id = 1;
 
 float max_f = .01, max_l = .01, min_l = -.01;
 int max_size = 100000;
-int[] prog_inputs = new int[4];
+int[] prog_inputs = new int[5];
 int selected_index = -1;
 
 Tab fillTab;

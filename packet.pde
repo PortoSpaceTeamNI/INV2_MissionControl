@@ -30,7 +30,7 @@ class dataPacket {
     final_packet[index++] = command_id;
     final_packet[index++] = payload_size;
     for (int i = 0; i < payload.length; i++) {
-      final_packet[index + i] = payload[i];
+      final_packet[index++] = payload[i];
     }
     // TODO: Add checksum
     final_packet[index++] = (byte)0x00;

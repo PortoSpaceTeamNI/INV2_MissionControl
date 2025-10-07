@@ -21,7 +21,7 @@ public void controlEvent(ControlEvent event) {
       }
     }
     if (selected_index >= 0) {
-      byte[] payload = {(byte)selected_index,
+      byte[] payload = {(byte)selected_index ,
         (byte) ((prog_inputs[0] >> 8) & 0xff),
         (byte)(prog_inputs[0] & 0xff),
         (byte)((prog_inputs[1] >> 8) & 0xff),
@@ -30,6 +30,8 @@ public void controlEvent(ControlEvent event) {
         (byte) (prog_inputs[2] & 0xff),
         (byte)((prog_inputs[3] >> 8) & 0xff),
         (byte) (prog_inputs[3] & 0xff),
+        (byte)((prog_inputs[4] >> 8) & 0xff),
+        (byte) (prog_inputs[4] & 0xff),
       };
       send((byte)Command.FILL_EXEC.ordinal(), payload);
     } else {
@@ -108,7 +110,7 @@ public void controlEvent(ControlEvent event) {
             .setColorActive(color(100, 0, 0))    // Red when off
             .setColorBackground(color(255, 0, 0));
         }
-        byte[] payload = {(byte)ValveToggle.valueOf(toggle.getName()).ordinal(), (byte) state};
+        byte[] payload = {(byte)ManCommand.VALVE_STATE.ordinal(), (byte)ValveToggle.valueOf(toggle.getName()).ordinal(), (byte) state};
         send((byte)Command.MANUAL_EXEC.ordinal(), payload);
       }
     }

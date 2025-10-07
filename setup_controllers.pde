@@ -6,7 +6,7 @@ Textlabel log_stats;
 Textlabel history;
 ArrayDeque<String> history_deque;
 Chart fillingChart, launchChart;
-Textlabel pressureLabel, temperatureLabel, weightLabel;
+Textlabel pressureLabel, temperatureLabel, thrustLabel;
 Textlabel altitudeLabel, velocityLabel, accelerationLabel;
 Textlabel ematch_label;
 Textlabel n2_label, n2_p_label, n2o_p_label, n2o_t_label, n2o_w_label, n2o_label, quick_dc_label, n2o_tank_label, chamber_label;

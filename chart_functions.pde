@@ -1,7 +1,7 @@
 void setupCharts() {
   fillingChart.addDataSet("Pressure");
   fillingChart.addDataSet("Temperature");
-  fillingChart.addDataSet("Weight");
+  fillingChart.addDataSet("Thrust");
 
   launchChart.addDataSet("Altitude");
   launchChart.addDataSet("Velocity");
@@ -11,7 +11,7 @@ void setupCharts() {
 
   fillingChart.setColors("Pressure", color(0, 255, 0));
   fillingChart.setColors("Temperature", color(255, 150, 255));
-  fillingChart.setColors("Weight", color(0, 255, 255));
+  fillingChart.setColors("Thrust", color(0, 255, 255));
 
   launchChart.setColors("Altitude", color(255, 0, 255));
   launchChart.setColors("Velocity", color(255, 255, 0));
@@ -34,7 +34,7 @@ void setupCharts() {
     .setPosition(width*.63, height*.20)
     .setSize((int)(width*.1), (int)(height*.1))
     ;
-  weightLabel = cp5.addLabel("Weight: ")
+  thrustLabel = cp5.addLabel("Thrust: ")
     .setColor(color(0, 255, 255))
     .setFont(font)
     .moveTo("filling")
@@ -68,12 +68,12 @@ void setupCharts() {
 void updateCharts() {
   // filling chart
   float fp = float(hydra_lf.tank_pressure) * .01,
-    ft = float(hydra_lf.probe_thermo3) * .1,
-    fw = float(lift_fs.n2o_loadcell);
+    ft = float(hydra_lf.probe_thermo2) * .01,
+    fw = float(lift_r.loadcell1 + lift_r.loadcell2 + lift_r.loadcell3);
 
   fillingChart.addData("Pressure", fp);
   fillingChart.addData("Temperature", ft);
-  fillingChart.addData("Weight", -fw);
+  fillingChart.addData("Thrust", fw);
 
   max_f = max(max_f, fp);
   max_f = max(max_f, ft);
@@ -83,7 +83,7 @@ void updateCharts() {
 
   pressureLabel.setText("Pressure: " + df.format(fp));
   temperatureLabel.setText("Temperature: " + df.format(ft));
-  weightLabel.setText("Weight: " + df.format(fw));
+  thrustLabel.setText("Thrust: " + df.format(fw));
 
   // launch chart
   float lalt = float(nav.kalman.altitude) * .1,

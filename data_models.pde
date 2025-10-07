@@ -1,17 +1,16 @@
  class OBC {
-   MainState state = MainState.IDLE;
-   FillingState filling_state = FillingState.FP_NONE;
+   State state = State.IDLE;
    boolean sd_logging;
  };
  
  class HYDRA_UF {
    boolean vent_valve, pressurizing_valve;
-   short probe_thermo1, probe_thermo2;
+   short probe_thermo1, probe_thermo2, probe_thermo3;
  };
  
  class HYDRA_LF {
    boolean main_valve, abort_valve;
-   short probe_thermo1, probe_thermo2, probe_thermo3, chamber_temperature;
+   short probe_thermo1, probe_thermo2, chamber_temperature;
    short tank_pressure, chamber_pressure;
  };
  

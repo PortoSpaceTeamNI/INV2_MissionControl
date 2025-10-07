@@ -24,7 +24,7 @@ void setupDiagrams() {
     .setText("N2")
     ;
 
-  n2_fill_toggle = cp5.addToggle("N2 Fill")
+  n2_fill_toggle = cp5.addToggle("N2_FILL_TOGGLE")
     .setPosition(width*.48, height*.52)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -37,7 +37,7 @@ void setupDiagrams() {
     .moveTo("global")
     ;
   
-  n2_purge_toggle = cp5.addToggle("N2 Purge")
+  n2_purge_toggle = cp5.addToggle("N2_PURGE_TOGGLE")
     .setPosition(width*.495, height*.553)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -84,7 +84,7 @@ void setupDiagrams() {
     .setText("N2O")
     ;
   
-  n2o_fill_toggle = cp5.addToggle("N2O fill toggle")
+  n2o_fill_toggle = cp5.addToggle("N2O_FILL_TOGGLE")
     .setPosition(width*.495, height*.65)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -96,7 +96,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  n2o_purge_toggle = cp5.addToggle("N2O purge toggle")
+  n2o_purge_toggle = cp5.addToggle("N2O_PURGE_TOGGLE")
     .setPosition(width*.495, height*.65)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -116,7 +116,7 @@ void setupDiagrams() {
     .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
     ;
-  n2o_quick_dc_toggle = cp5.addToggle("N2O quick dc toggle")
+  n2o_quick_dc_toggle = cp5.addToggle("N2O_QUICK_DC_TOGGLE")
     .setPosition(width*.394, height*.566)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -128,7 +128,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  n2_quick_dc_toggle = cp5.addToggle("N2 quick dc toggle")
+  n2_quick_dc_toggle = cp5.addToggle("N2_QUICK_DC_TOGGLE")
     .setPosition(width*.394, height*.566)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -148,7 +148,7 @@ void setupDiagrams() {
     .setSize((int)(width*.1), (int)(height*.1))
     .setLock(true)
     ;
-  vent_toggle = cp5.addToggle("Vent Toggle")
+  vent_toggle = cp5.addToggle("VENT_TOGGLE")
     .setPosition(width*.275, height*.405)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -160,7 +160,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  pressurizing_toggle = cp5.addToggle("Pressurizing Toggle")
+  pressurizing_toggle = cp5.addToggle("PRESSURIZING_TOGGLE")
     .setPosition(width*.275, height*.405)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -172,7 +172,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
     
-  abort_toggle = cp5.addToggle("Abort Toggle")
+  abort_toggle = cp5.addToggle("ABORT_TOGGLE")
     .setPosition(width*.275, height*.83)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)
@@ -184,7 +184,7 @@ void setupDiagrams() {
     .setColorActive(color(100, 0, 0))
     .moveTo("global");
 
-  main_toggle = cp5.addToggle("Main Toggle")
+  main_toggle = cp5.addToggle("MAIN_TOGGLE")
     .setPosition(width*.345, height*.85)
     .setSize((int)(width*toggle_width), (int)(height*toggle_height))
     .setValue(false)

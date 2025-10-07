@@ -9,10 +9,10 @@ void updateControllersData() {
     "UF\n" + 
     df.format(float(hydra_uf.probe_thermo1) * .01) + " ºC\n" +
     df.format(float(hydra_uf.probe_thermo2) * .01) + " ºC\n" +
+    df.format(float(hydra_uf.probe_thermo3) * .01) + " ºC\n" +
     "LF\n" + 
     df.format(float(hydra_lf.probe_thermo1) * .01) + " ºC\n" +
     df.format(float(hydra_lf.probe_thermo2) * .01) + " ºC\n" +
-    df.format(float(hydra_lf.probe_thermo3) * .01) + " ºC\n" +
     df.format(float(hydra_lf.tank_pressure) * .01) + " bar";
   n2o_tank_label.setText(n2o_tank_data);
   
@@ -28,7 +28,7 @@ void updateControllersData() {
 
   String chamber_data = "Chamber\n" +
     "P: " + df.format(float(hydra_lf.chamber_pressure) * .01) + " bar\n" +
-    "T: " + df.format(float(hydra_lf.chamber_temperature) * .1) + " ºC";
+    "T: " + df.format(float(hydra_lf.chamber_temperature) * .01) + " ºC";
   chamber_label.setText(chamber_data);
 
   // other
