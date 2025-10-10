@@ -59,6 +59,9 @@ public void controlEvent(ControlEvent event) {
     send((byte)Command.ABORT.ordinal(), empty_payload);
   } else if (event.isFrom("Arm")) {
     send((byte)Command.ARM.ordinal(), empty_payload);
+  }
+    else if (event.isFrom("Fire")) {
+    send((byte)Command.FIRE.ordinal(), empty_payload);
   } else if (event.isFrom("Ready")) {
     send((byte)Command.READY.ordinal(), empty_payload);
     status_toggle.setState(true);
