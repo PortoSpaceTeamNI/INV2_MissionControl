@@ -201,7 +201,7 @@ void setupControllers() {
 
   cp5.addScrollableList("serialPort")
     .setPosition(width*.02, height*.6)
-    .setSize((int)(width*.15), (int)(height*.12))
+    .setSize((int)(width*.15), (int)(height*.32))
     .setBarHeight((int)(height*.05))
     .setItemHeight((int)(height*.05))
     .addItems(portNames)
