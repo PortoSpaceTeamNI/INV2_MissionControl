@@ -74,7 +74,7 @@ void updateCharts() {
   fillingChart.addData("Pressure", fp);
   fillingChart.addData("Temperature", ft);
   fillingChart.addData("Thrust", fw);
-
+ 
   max_f = max(max_f, fp);
   max_f = max(max_f, ft);
   max_f = max(max_f, fw);

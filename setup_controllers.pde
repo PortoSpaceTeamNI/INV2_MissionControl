@@ -129,7 +129,7 @@ void setupControllers() {
     .setFont(font);
 
   cp5.addButton("Arm")
-    .setPosition(width*button_x1, height*.3)
+    .setPosition(width*button_x1, height*.35)
     .setSize((int)(width*button_width), (int)(height*button_height))
     .moveTo("launch")
     .setColor(defaultColor)
@@ -137,7 +137,15 @@ void setupControllers() {
     .setFont(font);
 
   cp5.addButton("Ready")
-    .setPosition(width*button_x1, height*.35)
+    .setPosition(width*button_x1, height*.3)
+    .setSize((int)(width*button_width), (int)(height*button_height))
+    .moveTo("launch")
+    .setColor(defaultColor)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+    .setFont(font);
+    
+  cp5.addButton("Fire")
+    .setPosition(width*button_x1, height*.4)
     .setSize((int)(width*button_width), (int)(height*button_height))
     .moveTo("launch")
     .setColor(defaultColor)
@@ -193,7 +201,7 @@ void setupControllers() {
 
   cp5.addScrollableList("serialPort")
     .setPosition(width*.02, height*.6)
-    .setSize((int)(width*.15), (int)(height*.12))
+    .setSize((int)(width*.15), (int)(height*.32))
     .setBarHeight((int)(height*.05))
     .setItemHeight((int)(height*.05))
     .addItems(portNames)

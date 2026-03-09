@@ -103,7 +103,7 @@ void updateControllersPos(String tab) {
     n2_p_label.setPosition(width*.443, height*.55);
     
     n2o_label.setPosition(width*.57, height*.6);
-    n2o_t_label.setPosition(width*.473, height*.822);
+    n2o_t_label.setPosition(width*.462, height*.822);
     n2o_p_label.setPosition(width*.418, height*.773);
     n2o_w_label.setPosition(width*.565, height*.932);
     
@@ -112,9 +112,9 @@ void updateControllersPos(String tab) {
     chamber_label.setPosition(width*.35, height*.85);
 
     n2_fill_toggle.setPosition(width*.457, height*.5);
-    n2o_fill_toggle.setPosition(width*.44, height*.68);
+    n2o_fill_toggle.setPosition(width*.39, height*.68);
     n2_purge_toggle.setPosition(width*.433, height*.465);
-    n2o_purge_toggle.setPosition(width*.372, height*.717);
+    n2o_purge_toggle.setPosition(width*.372, height*.73);
     n2_quick_dc_toggle.setPosition(width*.348, height*.52);
     n2o_quick_dc_toggle.setPosition(width*.348, height*.66);
 
