@@ -1,29 +1,22 @@
 HashMap<String, boolean[]> prog_param_map = new HashMap<String, boolean[]>();
 
-enum MainState {
+enum RocketState {
     IDLE,
-    FILLING,
-    READY,
+    ABORT,
+    FILL_N2,
+    PRE_PRESSURIZE,
+    FILL_OX,
+    POST_PRESSURIZE,
     ARMED,
     IGNITION,
     LAUNCH,
-    FLIGHT,
-    RECOVERY,
-    ABORT,
-    state_count, //this needs to be the last state for size to work
+    BOOST,
+    COAST,
+    DROGUE_DESCENT,
+    MAIN_DESCENT,
+    TOUCHDOWN,
+    _STATE_COUNT,
 }
-
-enum FillingState {
-    FP_NONE,
-    SAFE_IDLE,
-    FILLING_N2,
-    PRE_PRESSURE,
-    FILLING_N2O,
-    POST_PRESSURE,
-    filling_program_count, //this needs to be the last state for size to work
-}
-
-
 
 enum ValveToggle {
   PRESSURIZING_TOGGLE, 
@@ -56,7 +49,6 @@ void maps() {
 
 enum FillingProgram {
   FILL_PROGRAM_NONE,
-  FILL_PROGRAM_SAFE,
   FILL_PROGRAM_N2,
   FILL_PROGRAM_N_PRE,
   FILL_PROGRAM_N2O,

@@ -37,6 +37,7 @@ LinkedBlockingQueue<dataPacket> tx_queue = new LinkedBlockingQueue<dataPacket>()
 DecimalFormat df = new DecimalFormat("0.00");
 
 final byte myID = 0;
+
 byte[] rx_payload = new byte[MAX_PAYLOAD_SIZE];
 ParseState currentParseState = ParseState.SYNC;
 int rx_payload_index = 0;

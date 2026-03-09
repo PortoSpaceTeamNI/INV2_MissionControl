@@ -27,7 +27,7 @@ while(port_selected) {
     dataPacket head = tx_queue.peek();
     if (millis() - last_cmd_sent_time > packet_loss_timeout) {
         if (head != null) {
-            //  println(head.getPacket());
+            println(head.getPacket());
             myPort.write(head.getPacket());
             last_cmd_sent_time = millis();
             if (last_cmd_sent != (byte)0xff) {
@@ -113,10 +113,10 @@ switch(currentParseState) {
 
 void processPacket() {
 rx_packet = new_packet;
-/*
+
 println(rx_packet.getPacket());
-println();
-*/
+// println();
+
 rx_packet.logPacket(LogEvent.MSG_RECEIVED);
 if (rx_packet.command_id == Command.ACK.ordinal()) {
     if(rx_packet.payload[0] == Command.STATUS.ordinal()) {
@@ -239,7 +239,6 @@ last_cmd_sent = (byte)0xFF;
 }
 
 void send(byte command, byte[] payload) {
-//println(command, payload);
 tx_packet = new dataPacket(myID, obcID, command, payload);
 tx_packet.logPacket(LogEvent.MSG_SENT);
 if (myPort != null) {

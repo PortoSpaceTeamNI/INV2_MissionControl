@@ -52,15 +52,16 @@ public void controlEvent(ControlEvent event) {
   } else if (event.isFrom("Stop")) {
     send((byte)Command.STOP.ordinal(), empty_payload);
   } else if (event.isFrom("Resume")) {
-    send((byte)Command.FILL_RESUME.ordinal(), empty_payload);
+    //send((byte)Command.FILL_RESUME.ordinal(), empty_payload);
   } else if (event.isFrom("Status")) {
     request_status();
   } else if (event.isFrom("Abort")) {
     send((byte)Command.ABORT.ordinal(), empty_payload);
+    println("ABORT");
   } else if (event.isFrom("Arm")) {
     send((byte)Command.ARM.ordinal(), empty_payload);
   } else if (event.isFrom("Ready")) {
-    send((byte)Command.READY.ordinal(), empty_payload);
+    //send((byte)Command.READY.ordinal(), empty_payload);
     status_toggle.setState(true);
   } else if (event.isFrom(status_toggle)) {
     status_toggle_state = (int) event.getController().getValue();

@@ -1,6 +1,6 @@
-int status_interval = 500; // ms
-int packet_read_timeout = 250; // ms
-int packet_loss_timeout = 250;
+int status_interval = 30; // ms
+int packet_read_timeout = 20; // mszss
+int packet_loss_timeout = 20;
 int heartbeat_timeout = 1000;
 int doubt_timeout = 10000;
 
@@ -11,9 +11,8 @@ int baudRate = 115200;
 final byte MyID = (byte) 0x00;
 final byte SYNC_BYTE = (byte)0x55;
 
-List<String> programs = Arrays.asList("None", "Safe Idle", "Fill N2", "Pre Pressurize", "Fill N2O", "Post Pressurize");
+List<String> programs = Arrays.asList("None", "Fill N2", "Pre Pressurize", "Fill N2O", "Post Pressurize");
 List<String> prog_params = Arrays.asList("Target P", "Trigger P", "Target T", "Trigger T", "Target W");
-List<String> IDs = Arrays.asList( "1 : Rocket", "2 : Filling Station", "3 : Ignition", "4 : Broadcast");
 
 String logFileName = "log.txt";
 

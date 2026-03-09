@@ -3,14 +3,13 @@ enum Command {
     STATUS,
     ABORT,
     STOP,
-    READY,
     ARM,
     FIRE,
-    LAUNCH_OVERRIDE,
     FILL_EXEC,
-    FILL_RESUME,
     MANUAL_EXEC,
     ACK,
+    NACK,  
+    count
 };
 
 enum ManCommand {
@@ -19,5 +18,5 @@ enum ManCommand {
     SD_STATUS,
     VALVE_STATE,
     VALVE_MS,
-    ACK
+    count
 };
